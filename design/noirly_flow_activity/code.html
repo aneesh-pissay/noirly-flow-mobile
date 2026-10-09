@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Activity Feed - Noirly</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#131313",
+                      "on-primary-fixed": "#1a1c1c",
+                      "tertiary-fixed-dim": "#cec5c1",
+                      "primary-container": "#e2e2e2",
+                      "secondary-container": "#4a4949",
+                      "surface-bright": "#393939",
+                      "surface-container-highest": "#353535",
+                      "secondary": "#c9c6c5",
+                      "on-secondary": "#313030",
+                      "on-surface": "#e2e2e2",
+                      "primary": "#ffffff",
+                      "on-primary-fixed-variant": "#454747",
+                      "on-tertiary-fixed-variant": "#4b4643",
+                      "on-surface-variant": "#c4c7c8",
+                      "inverse-on-surface": "#303030",
+                      "surface-dim": "#131313",
+                      "surface-container-lowest": "#0e0e0e",
+                      "secondary-fixed": "#e5e2e1",
+                      "on-background": "#e2e2e2",
+                      "muted-text": "rgba(245, 245, 245, 0.60)",
+                      "border-gray": "#333333",
+                      "surface-variant": "#353535",
+                      "on-tertiary": "#342f2d",
+                      "on-tertiary-container": "#696360",
+                      "surface-container-low": "#1b1b1b",
+                      "primary-fixed-dim": "#c6c6c7",
+                      "on-primary-container": "#636565",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-tint": "#c6c6c7",
+                      "surface": "#131313",
+                      "tertiary-fixed": "#eae1dd",
+                      "outline": "#8e9192",
+                      "tertiary-container": "#eae1dd",
+                      "on-error": "#690005",
+                      "inverse-surface": "#e2e2e2",
+                      "inverse-primary": "#5d5f5f",
+                      "surface-container-high": "#2a2a2a",
+                      "on-secondary-container": "#bab8b7",
+                      "on-primary": "#2f3131",
+                      "primary-fixed": "#e2e2e2",
+                      "outline-variant": "#444748",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#c9c6c5",
+                      "on-tertiary-fixed": "#1f1b19",
+                      "on-secondary-fixed-variant": "#474646",
+                      "error-container": "#93000a",
+                      "surface-container": "#1f1f1f",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-mobile": "20px",
+                      "touch-target": "44px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "display-matrix": [
+                              "Space Grotesk"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "numeral-xl": [
+                              "Space Mono"
+                      ],
+                      "label-mono": [
+                              "Space Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "display-matrix": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "numeral-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .dashed-border {
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+        
+        .dashed-border-thick {
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+        }
+        
+        .dashed-divider {
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .avatar-ring {
+            border: 1px dashed rgba(255, 255, 255, 0.6);
+            padding: 2px;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col no-scrollbar">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background text-primary dark:text-primary font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tighter fixed top-0 w-full z-50 border-b border-dashed border-border-gray flex items-center justify-between px-margin-mobile h-touch-target w-full">
+<button aria-label="Back" class="w-10 h-10 flex items-center justify-center hover:bg-surface-bright transition-colors active:invert rounded-none">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<h1 class="font-display-matrix text-display-matrix text-primary dark:text-primary uppercase flex-1 text-center truncate px-2 text-2xl" style="font-size: 24px; line-height: 24px;">ACTIVITY_FEED</h1>
+<button aria-label="EXPORT" class="w-10 h-10 flex items-center justify-center hover:bg-surface-bright transition-colors active:invert dashed-border rounded-none">
+<span class="material-symbols-outlined text-[20px]" data-icon="ios_share">ios_share</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 pt-[60px] pb-[70px] px-margin-mobile overflow-y-auto no-scrollbar">
+<!-- Activity List -->
+<div class="flex flex-col mt-4">
+<!-- Entry 1 -->
+<div class="py-4 dashed-divider flex items-start gap-4 group hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="avatar-ring shrink-0 w-10 h-10 rounded-none overflow-hidden">
+<img alt="Alex Avatar" class="w-full h-full object-cover grayscale" data-alt="A stark, high-contrast monochrome portrait of a person (Alex Rivera) in a minimalist cyber-punk setting, harsh lighting, true black background, highly detailed texture, clinical tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgoTFd3e8NpDmSgP9UKJiMm8-6ES9vFSgFSH1b_K0lmEv-25ovLs2TL6TH01OXDM-r27ACWghojOZt5sNogekzs2qi_zOTDR5dm2HQMzInKsUOdjqGsW8bpUwBxfwjiyokU7ZZjLKhgKJccsAWAqRKK3KFdRDTG-xUEMKNYv3pttTzE_8avSNKgD2asHUDdu_Hqh1oAfxSLIKiWZVvDrXP2IxrwaA3ejQ3G99VsNQhisUtrXZDcPDL"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-background text-sm leading-tight">
+<span class="font-bold text-primary">Alex Rivera</span> created Task <span class="font-label-mono text-xs bg-surface-container-highest px-1 rounded-sm border border-dashed border-border-gray">#TSK-892</span>
+</p>
+<p class="font-label-mono text-muted-text mt-1 text-[10px] tracking-widest uppercase">2m ago</p>
+</div>
+<div class="shrink-0 pt-1">
+<span class="material-symbols-outlined text-muted-text text-sm" data-icon="add_task">add_task</span>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="py-4 dashed-divider flex items-start gap-4 group hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="avatar-ring shrink-0 w-10 h-10 rounded-none overflow-hidden">
+<img alt="Jane Avatar" class="w-full h-full object-cover grayscale" data-alt="A stylized, monochrome portrait of a woman (Jane Doe) with intense gaze, harsh architectural lighting, set against a true black background, deep shadows, clinical tech aesthetic, high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgtyOUNaO0BEyojid4sh_PedZtLx9WMCEXkA-T3UoE9LZnO0j0o61zNWc_-B9EFYCK-PK7wLfn8pnR68QDnY_tiiWjPIwXNA8fkIznG6zSRS7Vp7csWpDhI9X0r8_ZcsFxmMevtVwUnlR6kMZWzsnjX-cbF4wkbjMICIRtPeRGTCyQTm2ejWlzNkcDErAB-XrTWXKqnrDY9Tds4czHmNSWXguMXu71mvzolQ6Eby0oomoMG7eSxGql"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-background text-sm leading-tight">
+<span class="font-bold text-primary">Jane Doe</span> assigned Bug <span class="font-label-mono text-xs bg-surface-container-highest px-1 rounded-sm border border-dashed border-border-gray">#BUG-104</span> to <span class="font-label-mono text-primary text-xs underline decoration-dashed">Sys_Log_Bot</span>
+</p>
+<p class="font-label-mono text-muted-text mt-1 text-[10px] tracking-widest uppercase">15m ago</p>
+</div>
+<div class="shrink-0 pt-1">
+<span class="material-symbols-outlined text-muted-text text-sm" data-icon="assignment_ind">assignment_ind</span>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="py-4 dashed-divider flex items-start gap-4 group hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="avatar-ring shrink-0 w-10 h-10 rounded-none overflow-hidden bg-surface-container-highest flex items-center justify-center">
+<span class="font-label-mono text-primary font-bold">KV</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-background text-sm leading-tight">
+<span class="font-bold text-primary">K. Vane</span> added a comment to <span class="font-label-mono text-xs bg-surface-container-highest px-1 rounded-sm border border-dashed border-border-gray">#PRJ-09</span>
+</p>
+<div class="mt-2 p-2 dashed-border bg-surface-container-lowest text-muted-text text-xs font-body-md border-l-[3px] border-l-primary">
+                        "Initial diagnostic complete. Sector 4 requires re-indexing."
+                    </div>
+<p class="font-label-mono text-muted-text mt-2 text-[10px] tracking-widest uppercase">1h ago</p>
+</div>
+<div class="shrink-0 pt-1">
+<span class="material-symbols-outlined text-muted-text text-sm" data-icon="chat_bubble">chat_bubble</span>
+</div>
+</div>
+<!-- Entry 4 -->
+<div class="py-4 dashed-divider flex items-start gap-4 group hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="avatar-ring shrink-0 w-10 h-10 rounded-none overflow-hidden">
+<span class="material-symbols-outlined w-full h-full flex items-center justify-center bg-surface-container-highest text-primary" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-background text-sm leading-tight">
+                        Task updated by <span class="font-label-mono text-primary text-xs underline decoration-dashed">Sys_Log_Bot</span>. Status changed to <span class="font-label-mono text-xs bg-primary text-background px-1 rounded-sm font-bold">RESOLVED</span>
+</p>
+<p class="font-label-mono text-muted-text mt-1 text-[10px] tracking-widest uppercase">3h ago</p>
+</div>
+<div class="shrink-0 pt-1">
+<span class="material-symbols-outlined text-muted-text text-sm" data-icon="update">update</span>
+</div>
+</div>
+<!-- Entry 5 -->
+<div class="py-4 dashed-divider flex items-start gap-4 group hover:bg-surface-container-lowest transition-colors cursor-pointer">
+<div class="avatar-ring shrink-0 w-10 h-10 rounded-none overflow-hidden">
+<img alt="Alex Avatar" class="w-full h-full object-cover grayscale" data-alt="A stark, high-contrast monochrome portrait of a person (Alex Rivera) in a minimalist cyber-punk setting, harsh lighting, true black background, highly detailed texture, clinical tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbeskEF7-9myy3p16M_1J3EsH1n6ztxwytGbNbVsy1bBFDj6gjkIzOG6XSO9nMOXl7KBreErK9KYIQHws8dRPb9lEzU4g_YNHMC0Po0hEkLnqnmRC4TqcFyCDGW5IhdCLvnJLFpQ55lgfJgWbGLMbT11no_HPs-Sq9yP4rHqHiiVUDYxrc0lsvAFjpZSIFBF9OfzQclbzHbw4h3WgitlqMf95RfYBGjUXut9yw6mhenKz6Y3rGexLf"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-background text-sm leading-tight">
+<span class="font-bold text-primary">Alex Rivera</span> deployed build <span class="font-label-mono text-xs bg-surface-container-highest px-1 rounded-sm border border-dashed border-border-gray">v2.4.1</span>
+</p>
+<p class="font-label-mono text-muted-text mt-1 text-[10px] tracking-widest uppercase">5h ago</p>
+</div>
+<div class="shrink-0 pt-1">
+<span class="material-symbols-outlined text-muted-text text-sm" data-icon="cloud_upload">cloud_upload</span>
+</div>
+</div>
+</div>
+<!-- Load More Button -->
+<div class="mt-8 mb-4 flex justify-center">
+<button class="px-6 py-3 bg-transparent text-primary dashed-border font-label-mono text-label-mono uppercase tracking-widest hover:bg-primary hover:text-background active:invert transition-colors rounded-none w-full max-w-[200px]">
+                LOAD MORE
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-background dark:bg-background text-primary dark:text-primary font-label-mono text-label-mono uppercase tracking-widest fixed bottom-0 w-full z-50 border-t border-dashed border-border-gray flex justify-around items-stretch h-14 w-full md:hidden">
+<button aria-label="INBOX" class="flex flex-col items-center justify-center text-muted-text h-full w-full px-2 py-1 hover:bg-surface-container-highest active:scale-95 duration-75 rounded-none">
+<span class="material-symbols-outlined mb-1" data-icon="mail">mail</span>
+<span class="text-[10px]">INBOX</span>
+</button>
+<button aria-label="BOARD" class="flex flex-col items-center justify-center text-muted-text h-full w-full px-2 py-1 hover:bg-surface-container-highest active:scale-95 duration-75 rounded-none">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="text-[10px]">BOARD</span>
+</button>
+<button aria-label="SEARCH" class="flex flex-col items-center justify-center bg-primary text-on-primary h-full w-full px-2 py-1 hover:bg-surface-container-highest active:scale-95 duration-75 rounded-none">
+<span class="material-symbols-outlined mb-1" data-icon="search" data-weight="fill" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="text-[10px] font-bold">SEARCH</span>
+</button>
+<button aria-label="MENU" class="flex flex-col items-center justify-center text-muted-text h-full w-full px-2 py-1 hover:bg-surface-container-highest active:scale-95 duration-75 rounded-none">
+<span class="material-symbols-outlined mb-1" data-icon="menu">menu</span>
+<span class="text-[10px]">MENU</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,53 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Fraunces72pt-Bold.ttf",
+      "sha1": "f26fcd8165599f0316c97bd6bcfb060b23c588e5"
+    },
+    {
+      "path": "src/assets/fonts/Fraunces72pt-Regular.ttf",
+      "sha1": "7670fe0c6d4bdf9a8f15bb0648016926dcc6166c"
+    },
+    {
+      "path": "src/assets/fonts/Fraunces72pt-SemiBold.ttf",
+      "sha1": "1eaf25e50f2830e42428f0912a57bf8718872bc0"
+    },
+    {
+      "path": "src/assets/fonts/HankenGrotesk-Bold.ttf",
+      "sha1": "b8afdae7093b3f601e14753eeea7e025d94ae2e1"
+    },
+    {
+      "path": "src/assets/fonts/HankenGrotesk-Medium.ttf",
+      "sha1": "eed074cd0621132f6c524cdab636df8ae619671b"
+    },
+    {
+      "path": "src/assets/fonts/HankenGrotesk-Regular.ttf",
+      "sha1": "cc1950817ead1ba9642a34b638304bb30f7b0e54"
+    },
+    {
+      "path": "src/assets/fonts/HankenGrotesk-SemiBold.ttf",
+      "sha1": "878e1c7708ddcf131425ed1d5a0aea535911fd77"
+    },
+    {
+      "path": "src/assets/fonts/JetBrainsMono-Bold.ttf",
+      "sha1": "a2ca1bc6bb575ac125d9eaf338aa9a5af56bc377"
+    },
+    {
+      "path": "src/assets/fonts/JetBrainsMono-Medium.ttf",
+      "sha1": "e71dac67729fb110d7fc7e4a457ad19fcd921d2b"
+    },
+    {
+      "path": "src/assets/fonts/JetBrainsMono-Regular.ttf",
+      "sha1": "898ddb2e35ec8bc699c86d0a5e26da10a32a2600"
+    },
+    {
+      "path": "src/assets/fonts/JetBrainsMono-SemiBold.ttf",
+      "sha1": "c575ac3e7a32faee1a201ff4baf05596906ff3b2"
+    },
+    {
+      "path": "src/assets/fonts/README.md",
+      "sha1": "b5932adb898623952ffa828088db62f18d95750d"
+    }
+  ]
+}

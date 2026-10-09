@@ -24,18 +24,28 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>noirlyflow</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>noirlyflow</string>
+			</array>
+		</dict>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -55,5 +65,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fraunces72pt-Bold.ttf</string>
+		<string>Fraunces72pt-Regular.ttf</string>
+		<string>Fraunces72pt-SemiBold.ttf</string>
+		<string>HankenGrotesk-Bold.ttf</string>
+		<string>HankenGrotesk-Medium.ttf</string>
+		<string>HankenGrotesk-Regular.ttf</string>
+		<string>HankenGrotesk-SemiBold.ttf</string>
+		<string>JetBrainsMono-Bold.ttf</string>
+		<string>JetBrainsMono-Medium.ttf</string>
+		<string>JetBrainsMono-Regular.ttf</string>
+		<string>JetBrainsMono-SemiBold.ttf</string>
+	</array>
 </dict>
 </plist>

@@ -11,6 +11,18 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		04B560D9688341ADA3737530 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67750164B2134DD898F764AB /* Fraunces72pt-Bold.ttf */; };
+		2CE1B76311DE475A96B31BD0 /* Fraunces72pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABA34E1F0BC541C1A3847856 /* Fraunces72pt-Regular.ttf */; };
+		A9F8383897F84693835983EA /* Fraunces72pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4028ABA221A4AD59835E63C /* Fraunces72pt-SemiBold.ttf */; };
+		49317E33457B4A5FB350B055 /* HankenGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 617D5382D60C46DE85D57D04 /* HankenGrotesk-Bold.ttf */; };
+		EBB1A2E870184710B970C4CD /* HankenGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BA8AEB9F0E4221BE5F34E9 /* HankenGrotesk-Medium.ttf */; };
+		F6E3105333A14147A469D5D3 /* HankenGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 56EABFCEB9DB487F9DC51B57 /* HankenGrotesk-Regular.ttf */; };
+		86FD516370C54B57802DD3AB /* HankenGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7813CFEC80D84A94A68C50B4 /* HankenGrotesk-SemiBold.ttf */; };
+		759A1F94167D41C0A61AFB4C /* JetBrainsMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF35177F63DB4684BCCD8A4D /* JetBrainsMono-Bold.ttf */; };
+		A004DA060BBD401C826254C6 /* JetBrainsMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52B675B30E644BED96683D0A /* JetBrainsMono-Medium.ttf */; };
+		A9FF3E0BD2AA420D99523E0E /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5344E01E383F43B9AC2EC550 /* JetBrainsMono-Regular.ttf */; };
+		7055C42F92E34471A311C2F6 /* JetBrainsMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7A087E425474D46AFEE4821 /* JetBrainsMono-SemiBold.ttf */; };
+		4B2BD67C968346F480DE12D9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3B597C7F809545FD9F13C74C /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +36,18 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = NoirlyFlow/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NoirlyFlow/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		67750164B2134DD898F764AB /* Fraunces72pt-Bold.ttf */ = {isa = PBXFileReference; name = "Fraunces72pt-Bold.ttf"; path = "../src/assets/fonts/Fraunces72pt-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		ABA34E1F0BC541C1A3847856 /* Fraunces72pt-Regular.ttf */ = {isa = PBXFileReference; name = "Fraunces72pt-Regular.ttf"; path = "../src/assets/fonts/Fraunces72pt-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4028ABA221A4AD59835E63C /* Fraunces72pt-SemiBold.ttf */ = {isa = PBXFileReference; name = "Fraunces72pt-SemiBold.ttf"; path = "../src/assets/fonts/Fraunces72pt-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		617D5382D60C46DE85D57D04 /* HankenGrotesk-Bold.ttf */ = {isa = PBXFileReference; name = "HankenGrotesk-Bold.ttf"; path = "../src/assets/fonts/HankenGrotesk-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		49BA8AEB9F0E4221BE5F34E9 /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		56EABFCEB9DB487F9DC51B57 /* HankenGrotesk-Regular.ttf */ = {isa = PBXFileReference; name = "HankenGrotesk-Regular.ttf"; path = "../src/assets/fonts/HankenGrotesk-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7813CFEC80D84A94A68C50B4 /* HankenGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; name = "HankenGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/HankenGrotesk-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BF35177F63DB4684BCCD8A4D /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; name = "JetBrainsMono-Bold.ttf"; path = "../src/assets/fonts/JetBrainsMono-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		52B675B30E644BED96683D0A /* JetBrainsMono-Medium.ttf */ = {isa = PBXFileReference; name = "JetBrainsMono-Medium.ttf"; path = "../src/assets/fonts/JetBrainsMono-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5344E01E383F43B9AC2EC550 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; name = "JetBrainsMono-Regular.ttf"; path = "../src/assets/fonts/JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C7A087E425474D46AFEE4821 /* JetBrainsMono-SemiBold.ttf */ = {isa = PBXFileReference; name = "JetBrainsMono-SemiBold.ttf"; path = "../src/assets/fonts/JetBrainsMono-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3B597C7F809545FD9F13C74C /* README.md */ = {isa = PBXFileReference; name = "README.md"; path = "../src/assets/fonts/README.md"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +98,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				7715F526782D4DE4AFCAC4E2 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -96,6 +121,26 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		7715F526782D4DE4AFCAC4E2 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				67750164B2134DD898F764AB /* Fraunces72pt-Bold.ttf */,
+				ABA34E1F0BC541C1A3847856 /* Fraunces72pt-Regular.ttf */,
+				E4028ABA221A4AD59835E63C /* Fraunces72pt-SemiBold.ttf */,
+				617D5382D60C46DE85D57D04 /* HankenGrotesk-Bold.ttf */,
+				49BA8AEB9F0E4221BE5F34E9 /* HankenGrotesk-Medium.ttf */,
+				56EABFCEB9DB487F9DC51B57 /* HankenGrotesk-Regular.ttf */,
+				7813CFEC80D84A94A68C50B4 /* HankenGrotesk-SemiBold.ttf */,
+				BF35177F63DB4684BCCD8A4D /* JetBrainsMono-Bold.ttf */,
+				52B675B30E644BED96683D0A /* JetBrainsMono-Medium.ttf */,
+				5344E01E383F43B9AC2EC550 /* JetBrainsMono-Regular.ttf */,
+				C7A087E425474D46AFEE4821 /* JetBrainsMono-SemiBold.ttf */,
+				3B597C7F809545FD9F13C74C /* README.md */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -159,6 +204,18 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				04B560D9688341ADA3737530 /* Fraunces72pt-Bold.ttf in Resources */,
+				2CE1B76311DE475A96B31BD0 /* Fraunces72pt-Regular.ttf in Resources */,
+				A9F8383897F84693835983EA /* Fraunces72pt-SemiBold.ttf in Resources */,
+				49317E33457B4A5FB350B055 /* HankenGrotesk-Bold.ttf in Resources */,
+				EBB1A2E870184710B970C4CD /* HankenGrotesk-Medium.ttf in Resources */,
+				F6E3105333A14147A469D5D3 /* HankenGrotesk-Regular.ttf in Resources */,
+				86FD516370C54B57802DD3AB /* HankenGrotesk-SemiBold.ttf in Resources */,
+				759A1F94167D41C0A61AFB4C /* JetBrainsMono-Bold.ttf in Resources */,
+				A004DA060BBD401C826254C6 /* JetBrainsMono-Medium.ttf in Resources */,
+				A9FF3E0BD2AA420D99523E0E /* JetBrainsMono-Regular.ttf in Resources */,
+				7055C42F92E34471A311C2F6 /* JetBrainsMono-SemiBold.ttf in Resources */,
+				4B2BD67C968346F480DE12D9 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

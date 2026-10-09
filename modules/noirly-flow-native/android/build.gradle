@@ -1,0 +1,39 @@
+// Local library, autolinked from the app's package.json ("noirly-flow-native").
+// AGP and Kotlin come from the app's root buildscript classpath.
+
+def safeExtGet(prop, fallback) {
+  return rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.noirlyflow.nativeutils"
+  compileSdkVersion safeExtGet("compileSdkVersion", 36)
+
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 24)
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "NoirlyFlowNativeSpec"
+  codegenJavaPackageName = "com.noirlyflow.nativeutils"
+}

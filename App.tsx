@@ -1,45 +1,37 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from "react";
+import { StatusBar } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NoirlyThemeProvider } from "@noirly-dev/ui-native";
+import { AuthProvider } from "./src/auth/AuthContext";
+import { RootNavigator } from "./src/navigation/RootNavigator";
+import { WorkspaceProvider } from "./src/workspace/WorkspaceContext";
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <StatusBar barStyle="light-content" />
+        {/*
+          Pinned to dark rather than following the OS. Every screen in this app
+          is styled from the static dark snapshot in `src/theme.ts` (StyleSheet
+          cannot call a hook), so letting the provider flip to light would theme
+          the navigation chrome without theming the screens inside it.
+        */}
+        <NoirlyThemeProvider themeId="gold" scheme="dark">
+          <AuthProvider>
+            <WorkspaceProvider>
+              <RootNavigator />
+            </WorkspaceProvider>
+          </AuthProvider>
+        </NoirlyThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;

@@ -1,0 +1,26 @@
+{
+  "name": "noirly-flow-native",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Noirly Flow native helpers: clipboard, save-as file dialog, preferences.",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "react-native": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "NoirlyFlowNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.noirlyflow.nativeutils"
+    },
+    "ios": {
+      "modulesProvider": {
+        "NoirlyFlowNative": "NoirlyFlowNative"
+      }
+    }
+  }
+}
