@@ -29,6 +29,8 @@ def require_json_key!
 end
 
 # A supply client with an open edit, for the API calls supply has no action for.
+# Wrap those calls in `client.send(:call_google_api) { ... }`: it is private, and
+# turns Google's error JSON into a readable fastlane error.
 def with_play_edit
   require_json_key!
   Supply.config = FastlaneCore::Configuration.create(
@@ -152,7 +154,7 @@ platform :android do
     }.compact
     unless details.empty?
       with_play_edit do |client|
-        client.call_google_api do
+        client.send(:call_google_api) do
           client.client.patch_edit_detail(PACKAGE, client.current_edit.id, Google::Apis::AndroidpublisherV3::AppDetails.new(**details))
         end
       end
@@ -166,7 +168,7 @@ platform :android do
     if File.exist?(csv)
       require_json_key!
       client = Supply::Client.make_from_config
-      client.call_google_api do
+      client.send(:call_google_api) do
         client.client.data_application_safety(
           PACKAGE,
           Google::Apis::AndroidpublisherV3::SafetyLabelsUpdateRequest.new(safety_labels: File.read(csv)),
@@ -180,7 +182,7 @@ platform :android do
     # Closed testers as a Google Group (e.g. noirly-flow-testers@googlegroups.com).
     if (group = ENV["PLAY_CLOSED_TESTERS_GROUP"]).to_s.strip != ""
       with_play_edit do |client|
-        client.call_google_api do
+        client.send(:call_google_api) do
           client.client.patch_edit_tester(PACKAGE, client.current_edit.id, CLOSED_TRACK,
                                           Google::Apis::AndroidpublisherV3::Testers.new(google_groups: [group.strip]))
         end
