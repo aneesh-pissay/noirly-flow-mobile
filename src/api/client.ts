@@ -8,6 +8,7 @@ import type {
   FlowMe,
   MemberRole,
   Project,
+  ReportReason,
   Tag,
   Task,
   Workspace,
@@ -64,6 +65,19 @@ export const api = {
     return request<{ user: FlowMe }>("/api/me");
   },
   /** Deletes this person's Flow data. Use deleteNoirlyAccount() for the full account. */
+  /** Report a comment, task or member to the Noirly team. Members need `workspaceId`. */
+  report(input: {
+    targetType: "comment" | "task" | "user";
+    targetId: string;
+    workspaceId?: string;
+    reason: ReportReason;
+    details?: string | null;
+  }) {
+    return request<{ report: { id: string; duplicate: boolean } }>("/api/reports", {
+      method: "POST",
+      body: JSON.stringify(input),
+    });
+  },
   deleteMe() {
     return request<{ ok: boolean }>("/api/me", { method: "DELETE" });
   },

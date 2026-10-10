@@ -16,6 +16,7 @@ import {
 import { copyToClipboard } from "noirly-flow-native";
 import { api } from "../api/client";
 import { useMe } from "../auth/useMe";
+import { ReportSheet, type ReportTarget } from "../features/report/ReportSheet";
 import type { WorkspaceMember } from "../features/workspace/members";
 import { can } from "../permissions";
 import { colors, spacing } from "../theme";
@@ -53,6 +54,7 @@ export function MembersScreen() {
   const [inviting, setInviting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [editing, setEditing] = useState<WorkspaceMember | null>(null);
+  const [reporting, setReporting] = useState<ReportTarget | null>(null);
   const manage = Boolean(role && can(role, "members.manage"));
 
   const load = useCallback(async () => {
@@ -243,7 +245,8 @@ export function MembersScreen() {
               subtitle={item.email}
               leading={<Avatar name={item.displayName} />}
               trailing={<Badge label={item.role} tone={roleTone(item.role)} />}
-              onPress={manage && !isSelf ? () => setEditing(item) : undefined}
+              // Anyone can open another member to report them; only managers see role and remove.
+              onPress={!isSelf ? () => setEditing(item) : undefined}
             />
           );
         }}
@@ -264,28 +267,48 @@ export function MembersScreen() {
       >
         {editing ? (
           <View style={styles.sheet}>
-            <Text variant="monoLabel" tone="muted">
-              Role
-            </Text>
-            <ChoiceChips<MemberRole>
-              options={ROLES}
-              value={editing.role}
-              onChange={(next) => void changeRole(editing, next)}
-            />
-            <Text variant="meta" tone="muted">
-              Only an owner can make someone an owner, and the last owner can't be
-              demoted.
-            </Text>
+            {manage ? (
+              <>
+                <Text variant="monoLabel" tone="muted">
+                  Role
+                </Text>
+                <ChoiceChips<MemberRole>
+                  options={ROLES}
+                  value={editing.role}
+                  onChange={(next) => void changeRole(editing, next)}
+                />
+                <Text variant="meta" tone="muted">
+                  Only an owner can make someone an owner, and the last owner can't be
+                  demoted.
+                </Text>
+                <Button
+                  testID="member-remove"
+                  label="Remove from workspace"
+                  variant="destructive"
+                  onPress={() => removeMember(editing)}
+                  fullWidth
+                />
+              </>
+            ) : (
+              <Text variant="meta" tone="muted">
+                {editing.email}
+              </Text>
+            )}
             <Button
-              testID="member-remove"
-              label="Remove from workspace"
-              variant="destructive"
-              onPress={() => removeMember(editing)}
+              testID="member-report"
+              label="Report member"
+              variant="ghost"
+              onPress={() => {
+                const member = editing;
+                setEditing(null);
+                setReporting({ type: "user", id: member.userId, label: member.displayName, workspaceId });
+              }}
               fullWidth
             />
           </View>
         ) : null}
       </Sheet>
+      <ReportSheet target={reporting} onClose={() => setReporting(null)} />
     </View>
   );
 }

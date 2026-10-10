@@ -115,3 +115,14 @@ export type FlowMe = {
     bio: string | null;
   };
 };
+
+/** Why something was reported (matches the Flow API). */
+export type ReportReason =
+  | "spam"
+  | "harassment"
+  | "hate"
+  | "sexual"
+  | "violence"
+  | "self_harm"
+  | "illegal"
+  | "other";

@@ -29,6 +29,7 @@ import { api } from "../api/client";
 import { useMe } from "../auth/useMe";
 import { ActivityFeed } from "../features/activity/ActivityFeed";
 import { CommentThread } from "../features/comments/CommentThread";
+import { ReportSheet, type ReportTarget } from "../features/report/ReportSheet";
 import { formatDue } from "../features/task/dates";
 import { optionLabel, PRIORITY_OPTIONS, STATUS_OPTIONS } from "../features/task/options";
 import type { WorkspaceMember } from "../features/workspace/members";
@@ -118,6 +119,7 @@ export function TaskScreen() {
   const [newSubtask, setNewSubtask] = useState("");
   const [newTag, setNewTag] = useState("");
   const [sheet, setSheet] = useState<"project" | "due" | null>(null);
+  const [reporting, setReporting] = useState<ReportTarget | null>(null);
   const [commentsKey, setCommentsKey] = useState(0);
   const [activityKey, setActivityKey] = useState(0);
 
@@ -679,6 +681,18 @@ export function TaskScreen() {
         />
       ) : null}
 
+      {task && me?.id && task.createdById !== me.id ? (
+        <Button
+          testID="task-report"
+          label="Report task"
+          variant="ghost"
+          size="sm"
+          onPress={() => setReporting({ type: "task", id: task.id, label: task.title })}
+          style={styles.report}
+        />
+      ) : null}
+      <ReportSheet target={reporting} onClose={() => setReporting(null)} />
+
       <CommentThread
         taskId={taskId}
         members={members}
@@ -716,6 +730,7 @@ export function TaskScreen() {
 }
 
 const styles = StyleSheet.create({
+  report: { alignSelf: "flex-start" },
   root: { flex: 1, backgroundColor: colors.bg },
   content: { padding: spacing.lg, gap: spacing.xl, paddingBottom: spacing.xl * 2 },
   loadingCard: { margin: spacing.lg, padding: spacing.lg },

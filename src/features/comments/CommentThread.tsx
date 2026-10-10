@@ -4,6 +4,7 @@ import { Button, Card, Input, Separator, Text } from "@noirly-dev/ui-native";
 import { api } from "../../api/client";
 import { spacing } from "../../theme";
 import type { Comment } from "../../types";
+import { ReportSheet, type ReportTarget } from "../report/ReportSheet";
 import { memberName, type WorkspaceMember } from "../workspace/members";
 
 type Props = {
@@ -21,6 +22,7 @@ export function CommentThread({ taskId, members, writable, meId, refreshKey = 0 
   const [loading, setLoading] = useState(true);
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [reporting, setReporting] = useState<ReportTarget | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -92,6 +94,24 @@ export function CommentThread({ taskId, members, writable, meId, refreshKey = 0 
                 <Text variant="body" tone="secondary">
                   {item.body}
                 </Text>
+                {meId && item.authorId !== meId && !item.id.startsWith("tmp-") ? (
+                  <Text
+                    variant="meta"
+                    tone="muted"
+                    style={styles.report}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Report comment by ${memberName(members, item.authorId)}`}
+                    onPress={() =>
+                      setReporting({
+                        type: "comment",
+                        id: item.id,
+                        label: `${memberName(members, item.authorId)}: ${item.body}`,
+                      })
+                    }
+                  >
+                    Report
+                  </Text>
+                ) : null}
               </View>
             </View>
           ))}
@@ -127,6 +147,7 @@ export function CommentThread({ taskId, members, writable, meId, refreshKey = 0 
           {error}
         </Text>
       ) : null}
+      <ReportSheet target={reporting} onClose={() => setReporting(null)} />
     </View>
   );
 }
@@ -148,4 +169,5 @@ const styles = StyleSheet.create({
   composer: { gap: spacing.sm },
   composerInput: { minHeight: 72, textAlignVertical: "top" },
   send: { alignSelf: "flex-end" },
+  report: { alignSelf: "flex-start", paddingVertical: 4, textDecorationLine: "underline" },
 });
