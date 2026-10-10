@@ -1,0 +1,47 @@
+# Sends the store listing to Google Play (fastlane android store_listing):
+# title and descriptions, icon, feature graphic, phone screenshots, contact
+# details, Data safety (when fastlane/metadata/android/data-safety.csv exists)
+# and the closed testers group.
+#
+# Runs by hand, and on main whenever anything under fastlane/metadata changes.
+name: Update Play Store listing
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "fastlane/metadata/**"
+
+concurrency:
+  group: play-listing
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  listing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: closed-testing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - name: Play credentials
+        env:
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          test -n "$PLAY_JSON" || { echo "::error::PLAY_SERVICE_ACCOUNT_JSON is not set"; exit 1; }
+          printf '%s' "$PLAY_JSON" > fastlane/play-service-account.json
+      - name: Upload listing (fastlane android store_listing)
+        run: bundle exec fastlane android store_listing
+        env:
+          # Optional repository variable: a Google Group of closed testers.
+          PLAY_CLOSED_TESTERS_GROUP: ${{ vars.PLAY_CLOSED_TESTERS_GROUP }}
+      - name: Remove secrets from the runner
+        if: always()
+        run: rm -f fastlane/play-service-account.json

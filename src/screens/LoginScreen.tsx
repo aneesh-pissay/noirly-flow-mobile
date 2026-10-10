@@ -14,6 +14,7 @@ import { NoirlyIdentity } from "../auth/identity";
 import { useAuth } from "../auth/AuthContext";
 import { config } from "../config";
 import { colors, spacing } from "../theme";
+import { BrandMark } from "../ui/BrandMark";
 import type { NoirlySession } from "@noirly-dev/identity-mobile";
 
 let googleConfigured = false;
@@ -83,9 +84,7 @@ export function LoginScreen() {
             },
           ]}
         >
-          <Text variant="displayLg" tone="accent">
-            N
-          </Text>
+          <BrandMark size={68} color={tokens.color.accent} />
         </View>
         <Eyebrow>Noirly</Eyebrow>
         <Text variant="pageTitle">Flow</Text>

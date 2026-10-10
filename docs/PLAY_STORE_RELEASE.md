@@ -1,15 +1,24 @@
 # Publishing Noirly Flow on Google Play
 
-Step-by-step guide for releasing the Android app (`com.noirlyflow`) through the
+Step-by-step guide for releasing the Android app (`com.noirly.flow`) through the
 Play Console, written against this repo's setup:
 
 - Bare React Native 0.87 (no Expo/EAS). Builds come from Gradle in `android/`.
+- Package name (application ID) `com.noirly.flow`, set in
+  `android/app/build.gradle`. **Play locks it on the first upload**: after
+  that it can never change for this listing, so make sure it is the one you
+  want before step 8.
 - `targetSdkVersion 36`, `minSdkVersion 24`, only the `INTERNET` permission.
 - Release signing reads `android/keystore.properties` and
   `android/app/noirly-flow-release.keystore` (both git-ignored). They were made
   by `android/create-release-keystore.ps1`.
 - Sign-in uses Noirly Identity (email/password) and native Google Sign-In
   (`googleWebClientId` in `src/config.ts`).
+
+> **Automated path:** builds, uploads, the store listing and promotion run from
+> GitHub Actions with fastlane. See [CI_CD.md](CI_CD.md) for setup; this guide
+> covers what happens in each step and the Console-only settings. Store
+> images: [STORE_ASSETS.md](STORE_ASSETS.md).
 
 Play Console menu names change from time to time. If a label below doesn't
 match, use the Console's search box.
@@ -25,7 +34,7 @@ Play checks these during review. Sort them out before you submit for production.
 | 1 | **Privacy policy URL**, public, not a PDF, not behind a login | **Built:** `/privacy` in `noirly-identity`, linked from Menu → Privacy policy in the app | Deploy Identity, then use `https://noirly.identity.aneesh-pissay.in/privacy` |
 | 2 | **Account deletion.** Apps that let users create accounts must offer deletion both inside the app and on a web page | **Built:** Menu → Delete account in the app, and `/delete-account` on Identity | Deploy Identity and Flow and set the env var below. The web URL is `https://noirly.identity.aneesh-pissay.in/delete-account` |
 | 3 | **Reviewer login**: the app opens on a login screen | n/a | Create a dedicated reviewer account (verified email + password) with some sample data. It goes into *App access* (step 6). |
-| 4 | **Google Sign-In on the Play build**: Play re-signs the app with its own key, so the SHA-1 changes | Only the upload/debug SHA-1 is registered | Register the Play **app signing** SHA-1 in Google Cloud and in Identity (step 9). |
+| 4 | **Google Sign-In for `com.noirly.flow`**: Google matches the package name *and* the signing SHA-1, and Play re-signs the app with its own key | The Android OAuth client in Google Cloud was made for the old package name `com.noirlyflow` | Create Android OAuth clients for `com.noirly.flow` with the upload SHA-1 now, and the Play **app signing** SHA-1 after the first upload (step 9). |
 
 The upload SHA-1 is the one from `noirly-flow-release.keystore`, which
 `create-release-keystore.ps1` printed.
@@ -77,16 +86,19 @@ keytool -list -v -keystore android\app\noirly-flow-release.keystore -alias noirl
 
 ## 2. Set the version
 
-In `android/app/build.gradle`, under `defaultConfig`:
+`android/app/build.gradle` reads both from Gradle properties:
 
-```gradle
-versionCode 1        // integer; must go up by at least 1 on EVERY upload
-versionName "1.0"    // what users see, e.g. "1.0.0"
+```powershell
+.\gradlew.bat bundleRelease -PversionCode=2 -PversionName=1.0.1
 ```
 
-`versionCode 1` / `"1.0"` is fine for the first upload. For every later
-upload, bump `versionCode` (2, 3, …). Play rejects a bundle whose code was
-already used, even on a testing track.
+- `versionCode` must go up by at least 1 on **every** upload. Play rejects a
+  code that was already used, even on a testing track. Without the property
+  it is `1`.
+- `versionName` is what users see. Without the property it is `1.0.0`.
+
+With CI (CI_CD.md) you don't set either by hand: the version name comes from
+the tag or `package.json`, and the code is one more than the highest on Play.
 
 Optional: the launcher label comes from `app_name` in
 `android/app/src/main/res/values/strings.xml` (currently `NoirlyFlow`). Change
@@ -135,7 +147,7 @@ adb install -r app\build\outputs\apk\release\app-release.apk
 ```
 
 Then run the Maestro flows in **Noirly Testing** (Mobile testing → App ID
-`com.noirlyflow`, flows folder `noirly-testing/specs/noirly-mobile/flow`,
+`com.noirly.flow`, flows folder `noirly-testing/specs/noirly-mobile/flow`,
 variables `EMAIL` / `PASSWORD`). Also check by hand:
 
 - Email sign-in, then a cold restart keeps you signed in
@@ -149,19 +161,17 @@ variables `EMAIL` / `PASSWORD`). Also check by hand:
 
 | Field | Limit | Suggestion |
 |---|---|---|
-| App name | 30 chars | `Noirly Flow` |
-| Short description | 80 chars | `Tasks, boards and live presence for your whole workspace.` |
-| Full description | 4000 chars | What it does, key features (tasks, board, search, workspaces & roles, invites, activity export), and that it needs a Noirly account |
-| App icon | 512×512 PNG, 32-bit with alpha, ≤ 1 MB | Export from `design/` |
-| Feature graphic | 1024×500 JPG or 24-bit PNG, no alpha | Brand gold on dark, "Noirly Flow" wordmark |
-| Phone screenshots | 2–8; each side 320–3840 px; long side ≤ 2× short side | Inbox, Board, Task editor, Search, Workspace members |
+| App name | 30 chars | `fastlane/metadata/android/en-US/title.txt` |
+| Short description | 80 chars | `…/en-US/short_description.txt` |
+| Full description | 4000 chars | `…/en-US/full_description.txt` |
+| App icon | 512×512 PNG, 32-bit with alpha, ≤ 1 MB | `…/en-US/images/icon.png` (generated, STORE_ASSETS.md) |
+| Feature graphic | 1024×500 JPG or 24-bit PNG, no alpha | `…/en-US/images/featureGraphic.jpg` (generated) |
+| Phone screenshots | 2–8; each side 320–3840 px; long side ≤ 2× short side | `…/en-US/images/phoneScreenshots/` (8 framed shots, generated) |
 | Tablet screenshots | Optional (7" and 10") | Skip for v1 if the app isn't tuned for tablets |
 
-Phone screenshots from the emulator:
-
-```powershell
-adb exec-out screencap -p > inbox.png
-```
+All of these are uploaded by the *Update Play Store listing* workflow
+(CI_CD.md). The images are rendered from real app screenshots by
+`tools/store-art` (STORE_ASSETS.md).
 
 Also set:
 
@@ -248,12 +258,14 @@ sign-in fails on Play installs (typically `DEVELOPER_ERROR` / code 10).
    `919812667870-…apps.googleusercontent.com` → *APIs & Services →
    Credentials → Create credentials → OAuth client ID*:
    - Application type **Android**
-   - Package name `com.noirlyflow`
+   - Package name `com.noirly.flow`
    - SHA-1: the **app signing** SHA-1 from step 7
 
-   Keep the existing Android client for the upload key; each Android client
-   holds one SHA-1. Leave `googleWebClientId` in `src/config.ts` as it is (the
-   Web client).
+   Each Android client holds one package name and one SHA-1, so you need one
+   per key: create another for `com.noirly.flow` with the **upload** SHA-1
+   (step 1) so local release builds can sign in too. Clients for the old
+   package name `com.noirlyflow` can be deleted. Leave `googleWebClientId` in
+   `src/config.ts` as it is (the Web client).
 2. **Noirly Identity** admin → *Clients* → `noirly-flow-mobile` → **Android
    SHA-1** field. Add the app signing SHA-1 on a new line and keep the
    upload/debug ones. The field takes several fingerprints.
@@ -302,8 +314,11 @@ accounts skip this. *Dashboard* shows which applies to you.
 
 ## 12. Every later update
 
-1. Bump `versionCode` (+1) and `versionName` in `android/app/build.gradle`.
-2. `.\gradlew.bat bundleRelease`, then check the signer (step 3).
+With CI: bump `"version"` in `package.json`, push a `v<version>` tag, and the
+*Release to closed testing* workflow does the rest (CI_CD.md, step 7). By hand:
+
+1. Pick the next `versionCode` and a `versionName` (step 2).
+2. `.\gradlew.bat bundleRelease -PversionCode=<n> -PversionName=<x.y.z>`, then check the signer (step 3).
 3. Test the release APK and run the Maestro flows (step 4).
 4. Upload to **Internal testing** first, then promote to **Production**.
 
@@ -313,6 +328,8 @@ accounts skip this. *Dashboard* shows which applies to you.
 
 | Problem | Cause / fix |
 |---|---|
+| Google sign-in fails on every build after the rename | No Android OAuth client for `com.noirly.flow` with that build's SHA-1 (step 9) |
+| Old app still on the test phone | `com.noirlyflow` is a different app now: `adb uninstall com.noirlyflow` |
 | *"You uploaded an APK or Android App Bundle that was signed in debug mode"* | `keystore.properties` missing at build time; see step 3 |
 | *"Version code 1 has already been used"* | Bump `versionCode` |
 | Google sign-in fails only when installed from Play | App signing SHA-1 not registered; see step 9 |

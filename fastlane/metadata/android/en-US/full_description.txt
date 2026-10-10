@@ -1,0 +1,34 @@
+Noirly Flow keeps your work in one calm place: an inbox for what's next, boards for how it's moving, and a calendar for when it's due. Use it on your own, or bring your team and see changes the moment they happen.
+
+PLAN YOUR DAY
+• An inbox for everything that isn't in a project yet
+• Quick add with priority and due date in one line
+• Filter by status, priority, due date or "assigned to me"
+• Tap to complete, swipe to delete, long-press for quick edits
+
+RUN YOUR PROJECTS
+• List, board and calendar views for every project
+• Drag cards between To do, In progress and Done
+• Month calendar with tasks per day, plus everything still unscheduled
+
+EVERY DETAIL IN THE TASK
+• Description, status, priority, due date and repeats (daily or weekly)
+• Checklists and subtasks for the smaller steps
+• Tags and assignees so everyone knows what's theirs
+• Comments with names, and the full history of each task
+
+WORK AS A TEAM
+• Personal and team workspaces, switch in a tap
+• Roles for owners, admins, members and viewers
+• Invite people with a link, or share it from your phone
+• See who's online and watch the board update live
+• An activity feed of every change, exportable as CSV
+
+FIND ANYTHING
+• Search tasks and projects, or create one straight from what you typed
+
+ONE NOIRLY ACCOUNT
+Sign in with email or Google. The same account works across Noirly apps and on the web at noirly.flow.aneesh-pissay.in.
+
+YOUR DATA, YOUR CALL
+No ads and no trackers. Traffic is encrypted, and you can delete your account and your data at any time from Menu → Delete account.

@@ -1,0 +1,5 @@
+# Google Play service account key (JSON). CI writes it from the
+# PLAY_SERVICE_ACCOUNT_JSON secret; locally, put the file here (git-ignored)
+# or point PLAY_JSON_KEY_PATH at it. See docs/CI_CD.md.
+json_key_file(ENV["PLAY_JSON_KEY_PATH"] || File.expand_path("play-service-account.json", __dir__))
+package_name("com.noirly.flow")

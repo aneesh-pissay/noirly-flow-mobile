@@ -41,6 +41,14 @@ npm run ios
 
 Deep links: `noirlyflow://invite/{token}`
 
+## App ID
+
+Android application ID: **`com.noirly.flow`** (`applicationId` and `namespace`
+in `android/app/build.gradle`; Kotlin sources in `com/noirly/flow/`). Google
+Play locks it after the first upload. The `noirlyflow://` URL scheme and the
+native module's `com.noirlyflow.nativeutils` package are separate and stay as
+they are. Releasing: [docs/PLAY_STORE_RELEASE.md](docs/PLAY_STORE_RELEASE.md), automated with fastlane and GitHub Actions ([docs/CI_CD.md](docs/CI_CD.md)). Store art: [docs/STORE_ASSETS.md](docs/STORE_ASSETS.md).
+
 ## Features
 
 Parity with the web app (`noirly-flow/docs/FEATURES.md`):

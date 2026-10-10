@@ -83,13 +83,14 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.noirlyflow"
+    namespace "com.noirly.flow"
     defaultConfig {
-        applicationId "com.noirlyflow"
+        applicationId "com.noirly.flow"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        // CI passes -PversionCode=<n> -PversionName=<x.y.z> (fastlane/Fastfile); local builds use these defaults.
+        versionCode Integer.parseInt((project.findProperty("versionCode") ?: "1").toString())
+        versionName((project.findProperty("versionName") ?: "1.0.0").toString())
     }
     signingConfigs {
         debug {

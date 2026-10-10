@@ -50,8 +50,11 @@ yarn-error.log
 
 **/fastlane/report.xml
 **/fastlane/Preview.html
-**/fastlane/screenshots
 **/fastlane/test_output
+# Store art sources (flows, slides.json, raw captures) ARE committed: tools/store-art re-renders from them.
+# Google Play service account key: never commit.
+fastlane/play-service-account.json
+*.service-account.json
 
 # Bundle artifact
 *.jsbundle

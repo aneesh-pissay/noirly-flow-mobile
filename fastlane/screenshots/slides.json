@@ -1,0 +1,51 @@
+[
+  {
+    "raw": "inbox.png",
+    "theme": "gold",
+    "headline": "Your day,\nat a glance",
+    "sub": "Today, overdue and up next, in one calm inbox."
+  },
+  {
+    "raw": "board.png",
+    "theme": "dark",
+    "badge": "Live",
+    "headline": "Boards that move\nwith your **team**",
+    "sub": "Drag cards across To do, In progress and Done. Everyone sees it instantly."
+  },
+  {
+    "raw": "task.png",
+    "theme": "dark",
+    "headline": "Every detail,\nin **one place**",
+    "sub": "Status, priority, due dates, repeats and assignees."
+  },
+  {
+    "raw": "checklist.png",
+    "theme": "gold",
+    "headline": "Big work,\nsmall steps",
+    "sub": "Checklists, subtasks and tags keep the next step obvious."
+  },
+  {
+    "raw": "calendar.png",
+    "theme": "dark",
+    "headline": "See the month\n**ahead**",
+    "sub": "Every due date on a calendar, plus what's still unscheduled."
+  },
+  {
+    "raw": "search.png",
+    "theme": "dark",
+    "headline": "Find anything,\n**fast**",
+    "sub": "Search tasks and projects, or create one from what you typed."
+  },
+  {
+    "raw": "members.png",
+    "theme": "gold",
+    "headline": "Bring your\nwhole team",
+    "sub": "Invite with a link. Owners, admins, members and viewers."
+  },
+  {
+    "raw": "activity.png",
+    "theme": "dark",
+    "headline": "Every change,\n**on record**",
+    "sub": "A readable history of your workspace, exportable as CSV."
+  }
+]
