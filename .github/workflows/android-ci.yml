@@ -28,7 +28,8 @@ jobs:
         run: npm ci
         env:
           # @noirly-dev/* are aliases of @aneesh-pissay/* packages in GitHub Packages (.npmrc).
-          NODE_AUTH_TOKEN: ${{ secrets.NOIRLY_PACKAGES_TOKEN }}
+          # A read:packages token, or the built-in token once each private package grants this repo Actions access.
+          NODE_AUTH_TOKEN: ${{ secrets.NOIRLY_PACKAGES_TOKEN || github.token }}
       - run: npm run typecheck
       - run: npm run lint
       - run: npx jest --ci

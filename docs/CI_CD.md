@@ -69,7 +69,7 @@ git push -u origin main
 | `ANDROID_KEYSTORE_PASSWORD` | `storePassword` from `android/keystore.properties` |
 | `ANDROID_KEY_ALIAS` | `keyAlias` (`noirly-flow`) |
 | `ANDROID_KEY_PASSWORD` | `keyPassword` (same as the store password for this PKCS12 key) |
-| `NOIRLY_PACKAGES_TOKEN` | a GitHub token with `read:packages` that can read the `@aneesh-pissay` packages (aliased as `@noirly-dev/*`) |
+| `NOIRLY_PACKAGES_TOKEN` | a GitHub token with `read:packages` for the `@aneesh-pissay` packages (aliased as `@noirly-dev/*`). **Optional** if you instead open each private package (`ui`, `ui-native`, `identity-mobile`) → *Package settings → Manage Actions access → Add repository* → this repo; the workflows then use the built-in token. |
 
 | Variable (optional) | Value |
 |---|---|

@@ -55,7 +55,8 @@ jobs:
       - name: Install JS dependencies
         run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NOIRLY_PACKAGES_TOKEN }}
+          # A read:packages token, or the built-in token once each private package grants this repo Actions access.
+          NODE_AUTH_TOKEN: ${{ secrets.NOIRLY_PACKAGES_TOKEN || github.token }}
 
       - uses: actions/setup-java@v4
         with:
