@@ -117,7 +117,7 @@ The API can't set these. Answers that fit this app are in
 [PLAY_STORE_RELEASE.md](PLAY_STORE_RELEASE.md), step 6.
 
 1. *Policy and programs → App content*:
-   - **Privacy policy:** `https://noirly.identity.aneesh-pissay.in/privacy`
+   - **Privacy policy:** `https://noirly.flow.aneesh-pissay.in/privacy` (Flow's own policy; it links to Noirly Identity's for account data)
    - **App access:** reviewer account email and password
    - **Ads:** no ads
    - **Content rating:** questionnaire

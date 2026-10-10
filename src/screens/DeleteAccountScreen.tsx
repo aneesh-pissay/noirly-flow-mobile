@@ -111,7 +111,7 @@ export function DeleteAccountScreen() {
           label="Privacy policy"
           variant="ghost"
           size="sm"
-          onPress={() => void Linking.openURL(`${config.identityIssuer}/privacy`)}
+          onPress={() => void Linking.openURL(`${config.flowApiUrl}/privacy`)}
         />
         <Button
           label="Delete on the web instead"

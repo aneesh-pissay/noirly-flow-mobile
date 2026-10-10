@@ -361,7 +361,7 @@ export function HomeScreen() {
             <ListSeparator />
             <ListRow
               title="Privacy policy"
-              onPress={() => void Linking.openURL(`${config.identityIssuer}/privacy`)}
+              onPress={() => void Linking.openURL(`${config.flowApiUrl}/privacy`)}
             />
             <ListSeparator />
             <View testID="menu-delete-account">

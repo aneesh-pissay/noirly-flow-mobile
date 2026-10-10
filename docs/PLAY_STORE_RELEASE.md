@@ -31,7 +31,7 @@ Play checks these during review. Sort them out before you submit for production.
 
 | # | Requirement | Status in the code today | What to do |
 |---|---|---|---|
-| 1 | **Privacy policy URL**, public, not a PDF, not behind a login | **Built:** `/privacy` in `noirly-identity`, linked from Menu → Privacy policy in the app | Deploy Identity, then use `https://noirly.identity.aneesh-pissay.in/privacy` |
+| 1 | **Privacy policy URL**, public, not a PDF, not behind a login | **Built:** Flow's own policy at `/privacy` in `noirly-flow` (linked from Menu → Privacy policy), which links to Identity's policy for account data | Deploy noirly-flow, then use `https://noirly.flow.aneesh-pissay.in/privacy` |
 | 2 | **Account deletion.** Apps that let users create accounts must offer deletion both inside the app and on a web page | **Built:** Menu → Delete account in the app, and `/delete-account` on Identity | Deploy Identity and Flow and set the env var below. The web URL is `https://noirly.identity.aneesh-pissay.in/delete-account` |
 | 3 | **Reviewer login**: the app opens on a login screen | n/a | Create a dedicated reviewer account (verified email + password) with some sample data. It goes into *App access* (step 6). |
 | 4 | **Google Sign-In for `com.noirly.flow`**: Google matches the package name *and* the signing SHA-1, and Play re-signs the app with its own key | The Android OAuth client in Google Cloud was made for the old package name `com.noirlyflow` | Create Android OAuth clients for `com.noirly.flow` with the upload SHA-1 now, and the Play **app signing** SHA-1 after the first upload (step 9). |
@@ -55,9 +55,12 @@ The upload SHA-1 is the one from `noirly-flow-release.keystore`, which
 3. Optional: run `npm run account:retry-deletions` in `noirly-identity` on a
    schedule (e.g. daily). It re-sends notices Flow didn't accept because it was
    down.
-4. Read `/privacy` once on production and change anything that isn't true for
-   you. The operator name, country and effective date are in
-   `noirly-identity/lib/legal.ts`.
+4. Read both privacy policies once on production and change anything that
+   isn't true for you:
+   - Flow's, at `noirly.flow.aneesh-pissay.in/privacy` (the one the Play listing
+     uses). Settings are in `noirly-flow/src/lib/legal.ts`.
+   - Identity's, at `noirly.identity.aneesh-pissay.in/privacy`. Settings are in
+     `noirly-identity/lib/legal.ts`.
 5. Rebuild the app (step 3) so it includes Menu → Privacy policy and Delete
    account.
 
