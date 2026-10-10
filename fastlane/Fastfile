@@ -119,9 +119,24 @@ platform :android do
   desc "Upload the store listing: text, icon, feature graphic, screenshots, contact details, data safety, closed testers"
   lane :store_listing do
     require_json_key!
+    # supply only uploads listing text and images alongside an existing release
+    # on the track it is given (production by default, which a new app has
+    # none of: "Could not find release for version code ''"). Anchor it to the
+    # newest build on the closed track; with no build or changelog to upload,
+    # that release itself is left as it is.
+    version_code = begin
+      google_play_track_version_codes(package_name: PACKAGE, json_key: json_key_path, track: CLOSED_TRACK).max
+    rescue FastlaneCore::Interface::FastlaneError
+      nil # the track has no releases yet
+    end
+    unless version_code
+      UI.user_error!("No build on the #{CLOSED_TRACK} track yet. Run the closed testing workflow once, then run this again.")
+    end
     upload_to_play_store(
       package_name: PACKAGE,
       json_key: json_key_path,
+      track: CLOSED_TRACK,
+      version_code: version_code,
       metadata_path: METADATA,
       skip_upload_apk: true,
       skip_upload_aab: true,
