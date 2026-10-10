@@ -1,0 +1,35 @@
+# Checks on every push and pull request: TypeScript, lint and unit tests.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+        env:
+          # @noirly-dev/* are aliases of @aneesh-pissay/* packages in GitHub Packages (.npmrc).
+          # A read:packages token, or the built-in token once each private package grants this repo Actions access.
+          NODE_AUTH_TOKEN: ${{ secrets.NOIRLY_PACKAGES_TOKEN || github.token }}
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npx jest --ci

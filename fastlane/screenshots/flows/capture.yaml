@@ -1,0 +1,77 @@
+# Store screenshots: signs in, opens the demo team workspace and captures each
+# screen as fastlane/screenshots/raw/<name>.png (via tools/store-art/capture.mjs).
+#
+# Needs an account with realistic content in ${WORKSPACE}: a "Website relaunch"
+# project with a "Homepage hero copy" task (with a checklist), and members.
+# docs/STORE_ASSETS.md shows how the demo data was made.
+appId: ${APP_ID}
+name: Store screenshots
+---
+- runFlow: sign-in.yaml
+
+# 1 — Inbox
+- tapOn:
+    id: "tab-inbox"
+- waitForAnimationToEnd
+- takeScreenshot: inbox
+
+# 2 — Board, live
+- tapOn:
+    id: "tab-menu"
+- scrollUntilVisible:
+    element: "Website relaunch"
+    direction: DOWN
+- tapOn: "Website relaunch"
+- extendedWaitUntil:
+    visible: "LIVE.*"
+    timeout: 25000
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: board
+
+# 3 — Calendar
+- tapOn: "Calendar"
+- waitForAnimationToEnd
+- takeScreenshot: calendar
+
+# 4, 5 — Task detail and its checklist
+- tapOn: "Board"
+- tapOn: "Homepage hero copy"
+- waitForAnimationToEnd
+- takeScreenshot: task
+- scrollUntilVisible:
+    element: "Hand off to dev"
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: checklist
+- back
+
+# 6 — Search
+- tapOn:
+    id: "tab-search"
+- tapOn:
+    id: "search-input"
+- inputText: "design"
+- hideKeyboard
+- waitForAnimationToEnd
+- takeScreenshot: search
+
+# 7 — Members
+- tapOn:
+    id: "tab-menu"
+- scrollUntilVisible:
+    element: "Members"
+    direction: DOWN
+- tapOn: "Members"
+- waitForAnimationToEnd
+- takeScreenshot: members
+- back
+
+# 8 — Activity
+- scrollUntilVisible:
+    element: "Activity"
+    direction: DOWN
+- tapOn: "Activity"
+- waitForAnimationToEnd
+- takeScreenshot: activity

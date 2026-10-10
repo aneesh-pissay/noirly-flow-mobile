@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Noirly Flow - Calendar View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "surface-container-high": "#2a2a2a",
+                            "primary-fixed-dim": "#c6c6c7",
+                            "on-tertiary-container": "#696360",
+                            "muted-text": "rgba(245, 245, 245, 0.60)",
+                            "inverse-surface": "#e2e2e2",
+                            "on-secondary-container": "#bab8b7",
+                            "primary-fixed": "#e2e2e2",
+                            "surface-dim": "#131313",
+                            "background": "#131313",
+                            "surface-variant": "#353535",
+                            "outline-variant": "#444748",
+                            "on-tertiary": "#342f2d",
+                            "surface-container-low": "#1b1b1b",
+                            "inverse-primary": "#5d5f5f",
+                            "on-tertiary-fixed": "#1f1b19",
+                            "tertiary-fixed": "#eae1dd",
+                            "outline": "#8e9192",
+                            "on-secondary-fixed": "#1c1b1b",
+                            "surface-bright": "#393939",
+                            "on-surface-variant": "#c4c7c8",
+                            "on-error": "#690005",
+                            "on-primary-container": "#636565",
+                            "error": "#ffb4ab",
+                            "secondary-fixed": "#e5e2e1",
+                            "surface": "#131313",
+                            "on-secondary": "#313030",
+                            "inverse-on-surface": "#303030",
+                            "tertiary": "#ffffff",
+                            "on-primary-fixed-variant": "#454747",
+                            "tertiary-container": "#eae1dd",
+                            "on-primary": "#2f3131",
+                            "on-error-container": "#ffdad6",
+                            "primary-container": "#e2e2e2",
+                            "on-primary-fixed": "#1a1c1c",
+                            "on-surface": "#e2e2e2",
+                            "primary": "#ffffff",
+                            "border-gray": "#333333",
+                            "surface-container-highest": "#353535",
+                            "surface-tint": "#c6c6c7",
+                            "on-secondary-fixed-variant": "#474646",
+                            "secondary-container": "#4a4949",
+                            "surface-container": "#1f1f1f",
+                            "surface-container-lowest": "#0e0e0e",
+                            "on-background": "#e2e2e2",
+                            "tertiary-fixed-dim": "#cec5c1",
+                            "error-container": "#93000a",
+                            "secondary-fixed-dim": "#c9c6c5",
+                            "on-tertiary-fixed-variant": "#4b4643",
+                            "secondary": "#c9c6c5"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.125rem",
+                            "lg": "0.25rem",
+                            "xl": "0.5rem",
+                            "full": "0.75rem"
+                    },
+                    "spacing": {
+                            "gutter": "16px",
+                            "touch-target": "44px",
+                            "margin-mobile": "20px",
+                            "unit": "4px"
+                    },
+                    "fontFamily": {
+                            "body-md": ["Inter"],
+                            "label-mono": ["Space Mono"],
+                            "numeral-xl": ["Space Mono"],
+                            "display-matrix": ["Space Grotesk"],
+                            "headline-lg": ["Space Grotesk"],
+                            "headline-lg-mobile": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                            "numeral-xl": ["40px", {"lineHeight": "40px", "fontWeight": "700"}],
+                            "display-matrix": ["48px", {"lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700"}],
+                            "headline-lg": ["32px", {"lineHeight": "36px", "fontWeight": "600"}],
+                            "headline-lg-mobile": ["28px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dashed-border { border: 1px dashed rgba(255, 255, 255, 0.4); }
+        .dashed-border-top { border-top: 1px dashed rgba(255, 255, 255, 0.4); }
+        .dashed-border-bottom { border-bottom: 1px dashed rgba(255, 255, 255, 0.4); }
+        .dashed-border-right { border-right: 1px dashed rgba(255, 255, 255, 0.4); }
+        .dashed-border-left { border-left: 1px dashed rgba(255, 255, 255, 0.4); }
+        .dashed-border-all { border: 1px dashed rgba(255, 255, 255, 0.2); }
+        
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        .grid-7 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased pb-24 selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background dark:bg-background border-b border-dashed border-outline-variant flex justify-between items-center h-11 px-margin-mobile transition-colors duration-100">
+<button class="w-8 h-8 flex items-center justify-center text-primary dark:text-primary hover:bg-surface-variant transition-colors duration-100">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-display-matrix text-primary dark:text-primary tracking-tighter truncate max-w-[60%] text-center">
+            NOIRLY FLOW
+        </h1>
+<button class="w-8 h-8 flex items-center justify-center text-primary dark:text-primary hover:bg-surface-variant transition-colors duration-100">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 mt-11 flex flex-col max-w-md mx-auto w-full relative">
+<!-- Project Context & View Toggle -->
+<section class="px-margin-mobile py-4 dashed-border-bottom">
+<div class="flex justify-between items-end mb-4">
+<div>
+<span class="font-label-mono text-label-mono text-muted-text block mb-1">PROJECT</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Mobile App Redesign</h2>
+</div>
+</div>
+<!-- Segmented Control -->
+<div class="flex w-full dashed-border bg-surface-dim">
+<button class="flex-1 py-2 font-label-mono text-label-mono text-primary hover:bg-surface-variant transition-colors border-r border-dashed border-outline-variant/40">LIST</button>
+<button class="flex-1 py-2 font-label-mono text-label-mono text-primary hover:bg-surface-variant transition-colors border-r border-dashed border-outline-variant/40">BOARD</button>
+<button class="flex-1 py-2 font-label-mono text-label-mono bg-primary text-on-primary font-bold">CALENDAR</button>
+</div>
+</section>
+<!-- Month Navigation -->
+<section class="px-margin-mobile py-6 flex justify-between items-center">
+<button class="w-touch-target h-touch-target flex items-center justify-center dashed-border hover:bg-surface-variant transition-colors text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<h3 class="font-numeral-xl text-numeral-xl text-primary tracking-tighter">OCT.24</h3>
+<button class="w-touch-target h-touch-target flex items-center justify-center dashed-border hover:bg-surface-variant transition-colors text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</section>
+<!-- Calendar Grid -->
+<section class="px-margin-mobile mb-8">
+<!-- Day Headers -->
+<div class="grid-7 mb-2">
+<div class="text-center font-label-mono text-label-mono text-muted-text">M</div>
+<div class="text-center font-label-mono text-label-mono text-muted-text">T</div>
+<div class="text-center font-label-mono text-label-mono text-muted-text">W</div>
+<div class="text-center font-label-mono text-label-mono text-muted-text">T</div>
+<div class="text-center font-label-mono text-label-mono text-muted-text">F</div>
+<div class="text-center font-label-mono text-label-mono text-muted-text">S</div>
+<div class="text-center font-label-mono text-label-mono text-muted-text">S</div>
+</div>
+<!-- Grid Cells -->
+<div class="grid-7 gap-1">
+<!-- Empty padding days -->
+<div class="aspect-square dashed-border-all bg-surface-container-low flex items-start justify-end p-1 opacity-20"></div>
+<!-- Week 1 -->
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">1</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">2</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">3</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex justify-between w-full">
+<span class="w-1 h-1 bg-primary rounded-full mt-1 ml-1"></span>
+<div class="font-label-mono text-label-mono text-primary opacity-50">4</div>
+</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">5</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">6</div>
+</div>
+<!-- Week 2 -->
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">7</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex justify-between w-full">
+<div class="font-label-mono text-[8px] bg-surface-variant text-primary px-1 border border-dashed border-outline-variant/50">2</div>
+<div class="font-label-mono text-label-mono text-primary opacity-50">8</div>
+</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">9</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">10</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex justify-between w-full">
+<div class="font-label-mono text-[8px] bg-primary text-on-primary px-1">1</div>
+<div class="font-label-mono text-label-mono text-primary opacity-50">11</div>
+</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">12</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">13</div>
+</div>
+<!-- Week 3 -->
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">14</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">15</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">16</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">17</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">18</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">19</div>
+</div>
+<!-- TODAY -->
+<div class="aspect-square border border-primary bg-surface-dim relative flex flex-col justify-between p-1 cursor-pointer">
+<div class="flex justify-between w-full h-full">
+<div class="font-label-mono text-[8px] bg-primary text-on-primary px-1 self-start">4</div>
+<div class="font-label-mono text-label-mono bg-primary text-on-primary w-5 h-5 flex items-center justify-center font-bold">20</div>
+</div>
+</div>
+<!-- Week 4 -->
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">21</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">22</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex justify-between w-full">
+<span class="w-1 h-1 bg-primary rounded-full mt-1 ml-1"></span>
+<div class="font-label-mono text-label-mono text-primary opacity-50">23</div>
+</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">24</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">25</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">26</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">27</div>
+</div>
+<!-- Week 5 -->
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">28</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">29</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">30</div>
+</div>
+<div class="aspect-square dashed-border-all bg-surface-container-low relative flex flex-col justify-between p-1 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-full text-right font-label-mono text-label-mono text-primary opacity-50">31</div>
+</div>
+<!-- Empty padding days -->
+<div class="aspect-square dashed-border-all bg-surface-container-low flex items-start justify-end p-1 opacity-20"></div>
+<div class="aspect-square dashed-border-all bg-surface-container-low flex items-start justify-end p-1 opacity-20"></div>
+<div class="aspect-square dashed-border-all bg-surface-container-low flex items-start justify-end p-1 opacity-20"></div>
+</div>
+</section>
+<!-- Undated Section -->
+<section class="px-margin-mobile flex-1 pb-20">
+<details class="group mb-4" open="">
+<summary class="flex justify-between items-center cursor-pointer list-none dashed-border-bottom pb-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary transition-transform group-open:rotate-90">chevron_right</span>
+<h4 class="font-label-mono text-label-mono text-primary">UNDATED [03]</h4>
+</div>
+</summary>
+<div class="flex flex-col">
+<!-- Task Row 1 -->
+<div class="flex items-start gap-3 py-3 dashed-border-bottom hover:bg-surface-container-low transition-colors">
+<button class="w-5 h-5 flex-shrink-0 dashed-border bg-transparent mt-0.5 flex items-center justify-center hover:bg-primary/20 transition-colors"></button>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-primary leading-tight">Update README documentation</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-mono text-[10px] text-muted-text">[P1]</span>
+<span class="font-label-mono text-[10px] text-muted-text">UX/UI</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-muted-text hover:text-primary cursor-pointer text-sm">more_horiz</span>
+</div>
+<!-- Task Row 2 -->
+<div class="flex items-start gap-3 py-3 dashed-border-bottom hover:bg-surface-container-low transition-colors">
+<button class="w-5 h-5 flex-shrink-0 dashed-border bg-transparent mt-0.5 flex items-center justify-center hover:bg-primary/20 transition-colors"></button>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-primary leading-tight">Fix CSS glitch on mobile nav</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-mono text-[10px] text-error">[P0]</span>
+<span class="font-label-mono text-[10px] text-muted-text">BUG</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-muted-text hover:text-primary cursor-pointer text-sm">more_horiz</span>
+</div>
+<!-- Task Row 3 -->
+<div class="flex items-start gap-3 py-3 dashed-border-bottom hover:bg-surface-container-low transition-colors">
+<button class="w-5 h-5 flex-shrink-0 dashed-border bg-transparent mt-0.5 flex items-center justify-center hover:bg-primary/20 transition-colors"></button>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-primary leading-tight">Draft Q4 technical requirements</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-mono text-[10px] text-muted-text">[P2]</span>
+<span class="font-label-mono text-[10px] text-muted-text">PLANNING</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-muted-text hover:text-primary cursor-pointer text-sm">more_horiz</span>
+</div>
+</div>
+</details>
+</section>
+<!-- FAB (Pinned to bottom right, above nav) -->
+<div class="fixed bottom-20 right-margin-mobile z-40 md:right-auto md:ml-[calc(448px-20px-120px)]">
+<button class="bg-primary text-on-primary font-label-mono text-label-mono px-4 py-3 flex items-center gap-2 hover:bg-primary-fixed-dim transition-colors shadow-none rounded-none font-bold">
+<span class="material-symbols-outlined text-sm">add</span>
+                NEW TASK
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-background dark:bg-background border-t border-dashed border-outline-variant flex justify-around items-stretch h-touch-target transition-colors duration-100 md:hidden">
+<a class="flex flex-col items-center justify-center text-primary w-full h-full hover:bg-surface-container-highest active:invert transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mb-0.5 text-lg">mail</span>
+<span class="font-label-mono text-[10px] tracking-widest leading-none">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary w-full h-full hover:bg-primary-fixed-dim transition-colors duration-100" href="#">
+<span class="material-symbols-outlined icon-filled mb-0.5 text-lg">dashboard</span>
+<span class="font-label-mono text-[10px] tracking-widest leading-none font-bold">Board</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary w-full h-full hover:bg-surface-container-highest active:invert transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mb-0.5 text-lg">search</span>
+<span class="font-label-mono text-[10px] tracking-widest leading-none">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary w-full h-full hover:bg-surface-container-highest active:invert transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mb-0.5 text-lg">menu</span>
+<span class="font-label-mono text-[10px] tracking-widest leading-none">Menu</span>
+</a>
+</nav>
+<!-- Desktop Sidebar Stub (Hidden on mobile) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-11 bottom-0 w-64 border-r border-dashed border-outline-variant bg-background p-4">
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 font-label-mono text-label-mono text-primary p-3 hover:bg-surface-variant transition-colors" href="#"><span class="material-symbols-outlined">mail</span> Inbox</a>
+<a class="flex items-center gap-3 font-label-mono text-label-mono bg-primary text-on-primary p-3 transition-colors font-bold" href="#"><span class="material-symbols-outlined icon-filled">dashboard</span> Board</a>
+<a class="flex items-center gap-3 font-label-mono text-label-mono text-primary p-3 hover:bg-surface-variant transition-colors" href="#"><span class="material-symbols-outlined">search</span> Search</a>
+</nav>
+</aside>
+</body></html>

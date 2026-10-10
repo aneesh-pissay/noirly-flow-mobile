@@ -1,0 +1,195 @@
+# Noirly Flow — Google Play automation.
+#
+#   bundle exec fastlane android build                 signed release .aab (no upload)
+#   bundle exec fastlane android closed_testing        build + upload to the closed testing track
+#   bundle exec fastlane android store_listing         text, images, screenshots, contact details, data safety, testers
+#   bundle exec fastlane android promote_production    move the latest closed testing release to production
+#
+# GitHub Actions runs these (.github/workflows/android-*.yml). docs/CI_CD.md
+# lists the secrets and the one-time Play Console steps the API cannot do.
+
+require "json"
+require "supply"
+
+default_platform(:android)
+
+ROOT = File.expand_path("..", __dir__)
+PACKAGE = "com.noirly.flow"
+METADATA = File.join(ROOT, "fastlane/metadata/android")
+# "alpha" is Play's built-in closed testing track ("Closed testing - Alpha").
+CLOSED_TRACK = ENV.fetch("PLAY_CLOSED_TRACK", "alpha")
+ALL_TRACKS = %w[internal alpha beta production].freeze
+
+def json_key_path
+  ENV["PLAY_JSON_KEY_PATH"] || File.join(ROOT, "fastlane/play-service-account.json")
+end
+
+def require_json_key!
+  UI.user_error!("Google Play key not found at #{json_key_path}. See docs/CI_CD.md.") unless File.exist?(json_key_path)
+end
+
+# A supply client with an open edit, for the API calls supply has no action for.
+def with_play_edit
+  require_json_key!
+  Supply.config = FastlaneCore::Configuration.create(
+    Supply::Options.available_options,
+    { json_key: json_key_path, package_name: PACKAGE },
+  )
+  client = Supply::Client.make_from_config
+  client.begin_edit(package_name: PACKAGE)
+  yield client
+  client.commit_current_edit!
+rescue StandardError
+  client&.abort_current_edit if client&.current_edit
+  raise
+end
+
+def package_version
+  JSON.parse(File.read(File.join(ROOT, "package.json")))["version"]
+end
+
+# One more than the highest version code on any track, so every upload is new.
+def next_version_code
+  require_json_key!
+  highest = ALL_TRACKS.flat_map do |track|
+    google_play_track_version_codes(track: track, package_name: PACKAGE, json_key: json_key_path)
+  rescue StandardError
+    []
+  end.max
+  return highest + 1 if highest
+
+  # Nothing uploaded yet (or the API cannot see the app): fall back to the CI run number.
+  ENV.fetch("GITHUB_RUN_NUMBER", "1").to_i
+end
+
+def text(path)
+  file = File.join(METADATA, path)
+  File.exist?(file) ? File.read(file).strip : nil
+end
+
+platform :android do
+  desc "Build a signed release App Bundle. Options: version_code, version_name"
+  lane :build do |options|
+    version_code = (options[:version_code] || next_version_code).to_i
+    version_name = (options[:version_name] || package_version).to_s
+    UI.message("Building #{PACKAGE} #{version_name} (#{version_code})")
+
+    gradle(
+      project_dir: File.join(ROOT, "android"),
+      task: "bundle",
+      build_type: "Release",
+      properties: { "versionCode" => version_code, "versionName" => version_name },
+    )
+    aab = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+    UI.user_error!("No .aab was produced") unless aab && File.exist?(aab)
+    UI.success("Built #{aab}")
+    aab
+  end
+
+  desc "Build and upload to the closed testing track. Options: version_name, release_status (completed|draft)"
+  lane :closed_testing do |options|
+    aab = build(version_name: options[:version_name])
+    status = (options[:release_status] || ENV["PLAY_RELEASE_STATUS"] || "completed").to_s
+    upload = lambda do |release_status|
+      upload_to_play_store(
+        package_name: PACKAGE,
+        json_key: json_key_path,
+        track: CLOSED_TRACK,
+        aab: aab,
+        release_status: release_status,
+        metadata_path: METADATA,
+        skip_upload_apk: true,
+        skip_upload_metadata: true,
+        skip_upload_images: true,
+        skip_upload_screenshots: true,
+      )
+    end
+    begin
+      upload.call(status)
+    rescue FastlaneCore::Interface::FastlaneError => e
+      # Until the app's first release is published from the Play Console, Google
+      # only accepts draft releases. Upload as draft and say what to do next.
+      raise unless status != "draft" && e.message =~ /draft app/i
+      UI.important("Play only accepts draft releases until the app's first release is published. Uploading as a draft.")
+      upload.call("draft")
+      UI.important("Open Play Console → Test and release → Closed testing → #{CLOSED_TRACK}, review the draft and roll it out once.")
+    end
+  end
+
+  desc "Upload the store listing: text, icon, feature graphic, screenshots, contact details, data safety, closed testers"
+  lane :store_listing do
+    require_json_key!
+    upload_to_play_store(
+      package_name: PACKAGE,
+      json_key: json_key_path,
+      metadata_path: METADATA,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: true,
+      sync_image_upload: true, # only re-uploads images whose contents changed
+    )
+
+    details = {
+      contact_email: text("contact_email.txt"),
+      contact_website: text("contact_website.txt"),
+      contact_phone: text("contact_phone.txt"),
+      default_language: text("default_language.txt") || "en-US",
+    }.compact
+    unless details.empty?
+      with_play_edit do |client|
+        client.call_google_api do
+          client.client.patch_edit_detail(PACKAGE, client.current_edit.id, Google::Apis::AndroidpublisherV3::AppDetails.new(**details))
+        end
+      end
+      UI.success("Contact details: #{details.keys.join(', ')}")
+    end
+
+    # Data safety: Play's own CSV format. Export the template once from Play
+    # Console → App content → Data safety → Export to CSV, fill it in, and save
+    # it as fastlane/metadata/android/data-safety.csv.
+    csv = File.join(METADATA, "data-safety.csv")
+    if File.exist?(csv)
+      require_json_key!
+      client = Supply::Client.make_from_config
+      client.call_google_api do
+        client.client.data_application_safety(
+          PACKAGE,
+          Google::Apis::AndroidpublisherV3::SafetyLabelsUpdateRequest.new(safety_labels: File.read(csv)),
+        )
+      end
+      UI.success("Data safety form updated from data-safety.csv")
+    else
+      UI.important("No data-safety.csv yet: Data safety stays as set in the Play Console (docs/CI_CD.md).")
+    end
+
+    # Closed testers as a Google Group (e.g. noirly-flow-testers@googlegroups.com).
+    if (group = ENV["PLAY_CLOSED_TESTERS_GROUP"]).to_s.strip != ""
+      with_play_edit do |client|
+        client.call_google_api do
+          client.client.patch_edit_tester(PACKAGE, client.current_edit.id, CLOSED_TRACK,
+                                          Google::Apis::AndroidpublisherV3::Testers.new(google_groups: [group.strip]))
+        end
+      end
+      UI.success("Closed testing (#{CLOSED_TRACK}) testers: #{group}")
+    end
+  end
+
+  desc "Promote the latest closed testing release to production. Options: rollout (0.0–1.0, default 1.0)"
+  lane :promote_production do |options|
+    rollout = options[:rollout] ? options[:rollout].to_f : nil
+    upload_to_play_store(
+      package_name: PACKAGE,
+      json_key: json_key_path,
+      track: CLOSED_TRACK,
+      track_promote_to: "production",
+      rollout: rollout && rollout < 1 ? rollout.to_s : nil,
+      metadata_path: METADATA,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true,
+    )
+  end
+end

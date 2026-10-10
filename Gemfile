@@ -15,3 +15,6 @@ gem 'logger'
 gem 'benchmark'
 gem 'mutex_m'
 gem 'nkf'
+
+# Android release automation (fastlane/Fastfile, .github/workflows/android-*.yml).
+gem 'fastlane', '~> 2.228'

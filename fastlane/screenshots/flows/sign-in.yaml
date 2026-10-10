@@ -1,0 +1,44 @@
+# Fresh start and email sign-in, then switch to the demo team workspace.
+appId: ${APP_ID}
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: "login-use-email"
+    timeout: 60000
+- tapOn:
+    id: "login-use-email"
+- tapOn:
+    id: "login-email"
+- inputText: ${EMAIL}
+- hideKeyboard
+- tapOn:
+    id: "login-password"
+- inputText: ${PASSWORD}
+- hideKeyboard
+- tapOn:
+    id: "login-submit"
+- extendedWaitUntil:
+    visible: "Save password to Google Password Manager.*"
+    timeout: 8000
+    optional: true
+- runFlow:
+    when:
+      visible: "Save password to Google Password Manager.*"
+    commands:
+      - back
+- extendedWaitUntil:
+    visible:
+      id: "tab-inbox"
+    timeout: 60000
+- tapOn:
+    id: "tab-menu"
+- scrollUntilVisible:
+    element: ${WORKSPACE}
+    direction: DOWN
+    timeout: 30000
+- tapOn: ${WORKSPACE}
+- extendedWaitUntil:
+    visible: "Working in ${WORKSPACE}.*"
+    timeout: 30000

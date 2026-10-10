@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Noirly Flow - Task Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#cec5c1",
+                        "on-error": "#690005",
+                        "on-primary-fixed-variant": "#454747",
+                        "border-gray": "#333333",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "secondary": "#c9c6c5",
+                        "on-tertiary-container": "#696360",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#1a1c1c",
+                        "outline": "#8e9192",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#e5e2e1",
+                        "primary-container": "#e2e2e2",
+                        "on-tertiary": "#342f2d",
+                        "on-surface": "#e2e2e2",
+                        "on-secondary-container": "#bab8b7",
+                        "outline-variant": "#444748",
+                        "surface-dim": "#131313",
+                        "inverse-primary": "#5d5f5f",
+                        "surface-bright": "#393939",
+                        "surface-container-high": "#2a2a2a",
+                        "on-background": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#4b4643",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "surface-variant": "#353535",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-tint": "#c6c6c7",
+                        "surface-container-highest": "#353535",
+                        "on-secondary": "#313030",
+                        "on-primary": "#2f3131",
+                        "on-secondary-fixed-variant": "#474646",
+                        "tertiary-fixed": "#eae1dd",
+                        "background": "#131313",
+                        "secondary-container": "#4a4949",
+                        "surface": "#131313",
+                        "inverse-on-surface": "#303030",
+                        "muted-text": "rgba(245, 245, 245, 0.60)",
+                        "on-primary-container": "#636565",
+                        "tertiary": "#ffffff",
+                        "primary": "#ffffff",
+                        "surface-container-low": "#1b1b1b",
+                        "surface-container": "#1f1f1f",
+                        "on-surface-variant": "#c4c7c8",
+                        "tertiary-container": "#eae1dd",
+                        "on-tertiary-fixed": "#1f1b19",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "inverted-bg": "#F5F5F5",
+                        "inverted-text": "#131313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "touch-target": "44px",
+                        "unit": "4px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "numeral-xl": ["Space Mono"],
+                        "display-matrix": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Space Grotesk"],
+                        "label-mono": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "numeral-xl": ["40px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "display-matrix": ["48px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dashed-divider { border-bottom: 1px dashed #131313; }
+        .dashed-border { border: 1px dashed #131313; }
+    </style>
+</head>
+<body class="bg-inverted-bg text-inverted-text font-body-md antialiased min-h-screen flex flex-col selection:bg-inverted-text selection:text-inverted-bg">
+<!-- Top Navigation Panel -->
+<header class="sticky top-0 z-50 bg-inverted-bg px-margin-mobile h-[64px] flex justify-between items-center dashed-divider">
+<button class="w-touch-target h-touch-target flex items-center justify-start text-inverted-text hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tighter">TASK</span>
+<button class="w-touch-target h-touch-target flex items-center justify-end text-inverted-text hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-margin-mobile py-6 space-y-8 pb-32">
+<!-- Header Section -->
+<section class="space-y-4">
+<h1 class="font-headline-lg text-headline-lg outline-none cursor-text" contenteditable="true">Update README documentation</h1>
+<div class="flex items-center justify-between dashed-border p-3 cursor-pointer hover:bg-black/5 transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">folder</span>
+<span class="font-label-mono text-label-mono uppercase">Mobile App Redesign</span>
+</div>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</section>
+<!-- Properties Grid -->
+<section class="dashed-border divide-y divide-dashed divide-[#131313]">
+<!-- Status Row -->
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<span class="font-label-mono text-label-mono uppercase text-[#131313]/60">Status</span>
+<div class="flex items-center gap-2 bg-[#131313] text-[#F5F5F5] px-3 py-1">
+<span class="font-label-mono text-label-mono uppercase">TODO</span>
+</div>
+</div>
+<!-- Priority Row -->
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<span class="font-label-mono text-label-mono uppercase text-[#131313]/60">Priority</span>
+<span class="font-label-mono text-label-mono uppercase">[HIGH]</span>
+</div>
+<!-- Due Date Row -->
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<span class="font-label-mono text-label-mono uppercase text-[#131313]/60">Due Date</span>
+<span class="font-label-mono text-label-mono">OCT.24</span>
+</div>
+<!-- Recurrence Row -->
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<span class="font-label-mono text-label-mono uppercase text-[#131313]/60">Recurrence</span>
+<span class="font-label-mono text-label-mono uppercase">None</span>
+</div>
+<!-- Assignees Row -->
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<span class="font-label-mono text-label-mono uppercase text-[#131313]/60">Assignees</span>
+<div class="flex items-center gap-3">
+<span class="font-label-mono text-label-mono">Alex Rivera</span>
+<div class="w-8 h-8 rounded-full dashed-border flex items-center justify-center overflow-hidden p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A stark, high-contrast monochrome portrait of a young designer with glasses, isolated against a pure white background in a brutalist, lo-fi aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7idv_IFmom-4KnakOTJzN8G6spKM7s1cZTKPQWYKb-3rS5dR5vsRfb8rpM2WTUUogtf5D0LUjrmCzZV49xIcuU0QXOr_TLyTVun1g39JSsknMk138BBrpvVRC3pofnBQM-guQ1ABBQsNBgRkfdvfHrhi_iWH1mqCZucIF7RQa7713LoFalQ62tLXoogsatqvIwjaEQjXMHdBm4Yh5ACZvi-49H6tsJnV1BhTwtr7n5nP4v-FgA4jh"/>
+</div>
+</div>
+</div>
+<!-- Tags Row -->
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<span class="font-label-mono text-label-mono uppercase text-[#131313]/60">Tags</span>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono uppercase">[UX/UI]</span>
+<span class="font-label-mono text-label-mono uppercase">[CORE]</span>
+</div>
+</div>
+</section>
+<!-- Description -->
+<section class="space-y-2">
+<h2 class="font-label-mono text-label-mono uppercase text-[#131313]/60">Description</h2>
+<p class="text-[#131313]/80 leading-relaxed outline-none cursor-text" contenteditable="true">
+                Refactor the main project overview and add setup instructions for the new theme engine.
+            </p>
+</section>
+<!-- Checklist -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="font-label-mono text-label-mono uppercase">CHECKLIST</h2>
+<span class="font-label-mono text-label-mono">2/5</span>
+</div>
+<div class="dashed-border divide-y divide-dashed divide-[#131313]">
+<!-- Checked Item -->
+<label class="flex items-center gap-3 p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<input checked="" class="w-5 h-5 appearance-none dashed-border checked:bg-[#131313] checked:border-solid relative after:content-[''] after:absolute after:inset-0 after:m-auto after:w-2 after:h-2 after:bg-white checked:after:block after:hidden cursor-pointer" type="checkbox"/>
+<span class="line-through opacity-50">Review initial scope</span>
+</label>
+<!-- Unchecked Item -->
+<label class="flex items-center gap-3 p-4 cursor-pointer hover:bg-black/5 transition-colors">
+<input class="w-5 h-5 appearance-none dashed-border checked:bg-[#131313] checked:border-solid relative after:content-[''] after:absolute after:inset-0 after:m-auto after:w-2 after:h-2 after:bg-white checked:after:block after:hidden cursor-pointer" type="checkbox"/>
+<span>Write setup steps</span>
+</label>
+</div>
+</section>
+<!-- Comments -->
+<section class="space-y-4">
+<h2 class="font-label-mono text-label-mono uppercase">COMMENTS</h2>
+<!-- Existing Comment -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full dashed-border flex-shrink-0 overflow-hidden p-0.5 mt-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="A stark, high-contrast monochrome portrait of a young designer with glasses, isolated against a pure white background in a brutalist, lo-fi aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqFDUPCW2CWc_O0aG1OBxNrQDJt_3bQhtjkeXdGJ7GY5pefkiADIhIqkL8_0bimpqlOs0Lt9MQ7WlGdRILOxKvmXEm3wUm4E0aIaG6ulUuAoxa1gjZ3qy8_VdhoMBke90GJzzR0ELHjfxPFjkoyNVnBUXfgy-GfjnjdexUPqiWcLy_9szYJ3LP2mKBjwcWMZBwrpbzkahdwF4gaANrpMtgs8QYaYcb3kRXKb1Del7NnfRRKmNbYFJ_"/>
+</div>
+<div class="space-y-1">
+<div class="flex items-baseline gap-2">
+<span class="font-label-mono text-label-mono font-bold">Alex Rivera</span>
+<span class="font-label-mono text-label-mono text-[#131313]/50">10:15</span>
+</div>
+<p class="text-sm">Let's ensure the dot-matrix font loads before the main UI renders.</p>
+</div>
+</div>
+</section>
+<!-- Activity Log -->
+<div class="pt-8 text-center border-t border-dashed border-[#131313]/30">
+<span class="font-label-mono text-label-mono text-[#131313]/50 uppercase">Task created by Alex Rivera • OCT.20</span>
+</div>
+</main>
+<!-- Pinned Comment Input -->
+<div class="fixed bottom-0 left-0 w-full bg-inverted-bg p-4 dashed-border shadow-[0_-10px_20px_rgba(245,245,245,0.9)]">
+<div class="flex items-center gap-2 dashed-border p-2 bg-white">
+<input class="flex-1 bg-transparent border-none outline-none font-label-mono text-label-mono placeholder:text-[#131313]/40 px-2" placeholder="Add a comment..." type="text"/>
+<button class="w-8 h-8 flex items-center justify-center bg-[#131313] text-white hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</body></html>

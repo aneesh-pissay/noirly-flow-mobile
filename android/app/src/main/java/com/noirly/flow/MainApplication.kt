@@ -1,4 +1,4 @@
-package com.noirlyflow
+package com.noirly.flow
 
 import android.app.Application
 import com.facebook.react.PackageList

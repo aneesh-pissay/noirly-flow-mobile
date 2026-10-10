@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Noirly Flow - Search</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&amp;family=Space+Mono:wght@400;700&amp;family=Inter:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#c4c7c8",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-low": "#1b1b1b",
+                        "on-tertiary-fixed-variant": "#4b4643",
+                        "surface-container-highest": "#353535",
+                        "secondary": "#c9c6c5",
+                        "on-secondary-container": "#bab8b7",
+                        "on-primary-fixed": "#1a1c1c",
+                        "outline-variant": "#444748",
+                        "on-secondary": "#313030",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "muted-text": "rgba(245, 245, 245, 0.60)",
+                        "outline": "#8e9192",
+                        "surface-dim": "#131313",
+                        "on-primary-container": "#636565",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-container": "#4a4949",
+                        "on-tertiary": "#342f2d",
+                        "primary-container": "#e2e2e2",
+                        "tertiary-fixed": "#eae1dd",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-primary": "#2f3131",
+                        "surface-bright": "#393939",
+                        "primary-fixed": "#e2e2e2",
+                        "on-surface": "#e2e2e2",
+                        "tertiary-fixed-dim": "#cec5c1",
+                        "on-secondary-fixed-variant": "#474646",
+                        "primary": "#ffffff",
+                        "tertiary": "#ffffff",
+                        "inverse-on-surface": "#303030",
+                        "border-gray": "#333333",
+                        "on-tertiary-fixed": "#1f1b19",
+                        "surface-container": "#1f1f1f",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "inverse-primary": "#5d5f5f",
+                        "on-background": "#e2e2e2",
+                        "inverse-surface": "#e2e2e2",
+                        "background": "#131313",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#696360",
+                        "surface-variant": "#353535",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "error-container": "#93000a",
+                        "surface-tint": "#c6c6c7",
+                        "surface": "#131313",
+                        "tertiary-container": "#eae1dd",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-primary-fixed-variant": "#454747"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "touch-target": "44px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "numeral-xl": ["Space Mono"],
+                        "label-mono": ["Space Mono"],
+                        "display-matrix": ["Space Grotesk"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "numeral-xl": ["40px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "display-matrix": ["48px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+        }
+        .dashed-border-b {
+            border-bottom: 1px dashed #393939;
+        }
+        .dashed-border-t {
+            border-top: 1px dashed #393939;
+        }
+        .dashed-border-x {
+            border-left: 1px dashed #393939;
+            border-right: 1px dashed #393939;
+        }
+        .dashed-border {
+            border: 1px dashed #393939;
+        }
+        .bg-near-black {
+            background-color: #0D0D0D;
+        }
+    </style>
+</head>
+<body class="text-primary font-body-md antialiased min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-background dark:bg-background border-b border-dashed border-outline-variant z-40">
+<div class="flex items-center px-margin-mobile h-touch-target w-full">
+<span class="material-symbols-outlined text-primary dark:text-primary mr-4" data-icon="search">search</span>
+<h1 class="font-display-matrix text-display-matrix tracking-tighter text-primary dark:text-primary font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg">NOIRLY FLOW</h1>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-3xl mx-auto flex flex-col pt-4">
+<!-- Search Input Section -->
+<section class="px-margin-mobile mb-8">
+<div class="relative w-full bg-near-black border-dashed border border-outline-variant h-14 flex items-center px-4 transition-colors focus-within:border-primary">
+<input autofocus="" class="w-full bg-transparent border-none outline-none text-primary font-body-md placeholder:text-outline-variant" placeholder="Search tasks, workspaces..." type="text"/>
+<div class="w-[2px] h-6 bg-primary animate-pulse absolute left-4 pointer-events-none opacity-0 focus-within:opacity-100"></div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section class="px-margin-mobile mb-12">
+<h2 class="font-label-mono text-label-mono text-outline mb-4">QUICK_ACTIONS</h2>
+<div class="flex flex-col">
+<!-- Action Item -->
+<button class="w-full flex items-center justify-between py-4 dashed-border-b group hover:bg-surface-container-highest transition-colors duration-200 ease-in-out">
+<div class="flex items-center gap-4 pl-2">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="add_task">add_task</span>
+<span class="font-body-md text-primary">Create task</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline group-hover:text-primary transition-colors pr-2">[T]</span>
+</button>
+<!-- Action Item -->
+<button class="w-full flex items-center justify-between py-4 dashed-border-b group hover:bg-surface-container-highest transition-colors duration-200 ease-in-out">
+<div class="flex items-center gap-4 pl-2">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="create_new_folder">create_new_folder</span>
+<span class="font-body-md text-primary">Create project</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline group-hover:text-primary transition-colors pr-2">[P]</span>
+</button>
+<!-- Action Item -->
+<button class="w-full flex items-center justify-between py-4 dashed-border-b group hover:bg-surface-container-highest transition-colors duration-200 ease-in-out">
+<div class="flex items-center gap-4 pl-2">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="inbox">inbox</span>
+<span class="font-body-md text-primary">Go to Inbox</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline group-hover:text-primary transition-colors pr-2">[I]</span>
+</button>
+<!-- Action Item -->
+<button class="w-full flex items-center justify-between py-4 dashed-border-b group hover:bg-surface-container-highest transition-colors duration-200 ease-in-out">
+<div class="flex items-center gap-4 pl-2">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="history">history</span>
+<span class="font-body-md text-primary">Go to Activity</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline group-hover:text-primary transition-colors pr-2">[A]</span>
+</button>
+<!-- Action Item -->
+<button class="w-full flex items-center justify-between py-4 dashed-border-b group hover:bg-surface-container-highest transition-colors duration-200 ease-in-out">
+<div class="flex items-center gap-4 pl-2">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+<span class="font-body-md text-primary">Settings</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors pr-2" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Simulated Results: Tasks -->
+<section class="px-margin-mobile mb-12">
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-label-mono text-label-mono text-outline">TASKS</h2>
+<span class="font-numeral-xl text-[16px] leading-[16px] text-outline">02</span>
+</div>
+<div class="flex flex-col bg-near-black dashed-border">
+<!-- Task Result -->
+<div class="w-full flex flex-col p-4 dashed-border-b hover:bg-surface-container-highest transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body-md text-primary font-medium">Update README documentation</h3>
+<span class="font-label-mono text-label-mono text-outline">MAR 24</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-outline" data-icon="folder">folder</span>
+<p class="font-label-mono text-[10px] text-outline">Mobile App Redesign</p>
+</div>
+</div>
+<!-- Task Result -->
+<div class="w-full flex flex-col p-4 hover:bg-surface-container-highest transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body-md text-primary font-medium">Fix navigation routing bug</h3>
+<span class="font-label-mono text-label-mono text-outline">MAR 22</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-outline" data-icon="folder">folder</span>
+<p class="font-label-mono text-[10px] text-outline">Core Infrastructure</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Simulated Results: Workspaces -->
+<section class="px-margin-mobile mb-8">
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-label-mono text-label-mono text-outline">WORKSPACES</h2>
+<span class="font-numeral-xl text-[16px] leading-[16px] text-outline">01</span>
+</div>
+<div class="flex flex-col bg-near-black dashed-border">
+<!-- Workspace Result -->
+<div class="w-full flex items-center justify-between p-4 hover:bg-surface-container-highest transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-high flex items-center justify-center dashed-border">
+<span class="font-label-mono text-label-mono text-primary">Q1</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-body-md text-primary font-medium">Q1 Marketing Campaign</h3>
+<p class="font-label-mono text-[10px] text-outline mt-1">4 Active Members</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 h-16 bg-background dark:bg-background border-t border-dashed border-outline-variant md:hidden">
+<div class="flex justify-around items-stretch w-full h-full">
+<!-- Inbox (Inactive) -->
+<button class="flex flex-col items-center justify-center w-full h-full opacity-60 text-primary hover:bg-surface-container-high transition-all duration-75 active:invert group">
+<span class="material-symbols-outlined mb-1" data-icon="inbox">inbox</span>
+<span class="font-label-mono text-[10px]">Inbox</span>
+</button>
+<!-- Board (Inactive) -->
+<button class="flex flex-col items-center justify-center w-full h-full opacity-60 text-primary hover:bg-surface-container-high transition-all duration-75 active:invert group">
+<span class="material-symbols-outlined mb-1" data-icon="grid_view">grid_view</span>
+<span class="font-label-mono text-[10px]">Board</span>
+</button>
+<!-- Search (Active) -->
+<button class="flex flex-col items-center justify-center w-full h-full bg-primary text-background hover:bg-surface-container-high transition-all duration-75 active:invert group">
+<span class="material-symbols-outlined mb-1" data-icon="search" data-weight="fill">search</span>
+<span class="font-label-mono text-[10px] font-bold">Search</span>
+</button>
+<!-- Menu (Inactive) -->
+<button class="flex flex-col items-center justify-center w-full h-full opacity-60 text-primary hover:bg-surface-container-high transition-all duration-75 active:invert group">
+<span class="material-symbols-outlined mb-1" data-icon="menu">menu</span>
+<span class="font-label-mono text-[10px]">Menu</span>
+</button>
+</div>
+</nav>
+<script>
+        // Simple input focus handling for the custom cursor effect
+        const searchInput = document.querySelector('input[type="text"]');
+        const cursorIndicator = searchInput.nextElementSibling;
+
+        searchInput.addEventListener('focus', () => {
+            cursorIndicator.classList.remove('opacity-0');
+        });
+
+        searchInput.addEventListener('blur', () => {
+            if(searchInput.value === '') {
+                cursorIndicator.classList.add('opacity-0');
+            }
+        });
+        
+        searchInput.addEventListener('input', () => {
+             if(searchInput.value !== '') {
+                cursorIndicator.style.display = 'none';
+             } else {
+                 cursorIndicator.style.display = 'block';
+             }
+        });
+    </script>
+</body></html>

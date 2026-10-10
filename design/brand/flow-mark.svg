@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="Noirly Flow mark">
+  <title>Noirly Flow — monochrome</title>
+  <desc>A board whose cards thin out column by column: work moving to done.</desc>
+  <!-- Default tint for standalone use. Delete this rule to inherit color from the parent.
+       Plain currentColor shapes only (no masks/clipPaths) so theming code can recolor it safely. -->
+  <style>svg { color: #C9A44A; }</style>
+  <!-- Three board columns; cards thin out as work flows to done -->
+  <g fill="currentColor">
+    <rect x="196" y="216" width="184" height="152" rx="44"/>
+    <rect x="196" y="404" width="184" height="152" rx="44"/>
+    <rect x="196" y="592" width="184" height="152" rx="44"/>
+    <rect x="420" y="216" width="184" height="152" rx="44"/>
+    <rect x="420" y="404" width="184" height="152" rx="44"/>
+    <rect x="644" y="216" width="184" height="152" rx="44"/>
+  </g>
+</svg>

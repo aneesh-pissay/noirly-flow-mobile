@@ -1,0 +1,14 @@
+{
+  "name": "noirly-flow-store-art",
+  "private": true,
+  "type": "module",
+  "description": "Renders the launcher icon, Play icon, feature graphic and framed store screenshots from HTML templates.",
+  "scripts": {
+    "icons": "node icons.mjs",
+    "store": "node store.mjs",
+    "all": "node icons.mjs && node store.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.56.0"
+  }
+}

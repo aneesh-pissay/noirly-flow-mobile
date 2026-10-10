@@ -1,4 +1,4 @@
-package com.noirlyflow
+package com.noirly.flow
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

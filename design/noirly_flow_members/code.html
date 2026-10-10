@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Noirly Flow - Members</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Inter:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "surface-variant": "#353535",
+                        "muted-text": "rgba(245, 245, 245, 0.60)",
+                        "inverse-surface": "#e2e2e2",
+                        "on-background": "#e2e2e2",
+                        "on-secondary": "#313030",
+                        "primary": "#ffffff",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "background": "#131313",
+                        "on-tertiary": "#342f2d",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "tertiary-container": "#eae1dd",
+                        "secondary-container": "#4a4949",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "surface": "#131313",
+                        "surface-bright": "#393939",
+                        "surface-dim": "#131313",
+                        "border-gray": "#333333",
+                        "inverse-primary": "#5d5f5f",
+                        "primary-fixed": "#e2e2e2",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#4b4643",
+                        "on-tertiary-container": "#696360",
+                        "on-primary": "#2f3131",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "on-surface": "#e2e2e2",
+                        "secondary": "#c9c6c5",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-secondary-container": "#bab8b7",
+                        "surface-container-low": "#1b1b1b",
+                        "surface-container-highest": "#353535",
+                        "surface-container": "#1f1f1f",
+                        "tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1f1b19",
+                        "on-primary-fixed-variant": "#454747",
+                        "tertiary-fixed": "#eae1dd",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "on-primary-container": "#636565",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#c4c7c8",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-on-surface": "#303030",
+                        "tertiary-fixed-dim": "#cec5c1",
+                        "secondary-fixed": "#e5e2e1",
+                        "outline": "#8e9192",
+                        "primary-container": "#e2e2e2",
+                        "surface-tint": "#c6c6c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "touch-target": "44px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "display-matrix": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "numeral-xl": ["Space Mono"],
+                        "label-mono": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "display-matrix": ["48px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "numeral-xl": ["40px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #131313; color: #ffffff; }
+        .dashed-border { border: 1px dashed #444748; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="font-body-md text-primary bg-background min-h-screen flex flex-col antialiased selection:bg-primary selection:text-background">
+<header class="w-full h-[64px] border-b border-dashed border-outline-variant flex items-center justify-between px-margin-mobile sticky top-0 bg-background z-40 shrink-0">
+<button class="w-touch-target h-touch-target flex items-center justify-center -ml-2 active:bg-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-primary group-active:text-primary">chevron_left</span>
+</button>
+<h1 class="font-display-matrix text-headline-lg-mobile tracking-tighter uppercase text-primary truncate px-4">Members</h1>
+<span class="font-numeral-xl text-headline-lg-mobile text-primary shrink-0">[12]</span>
+</header>
+<main class="flex-1 overflow-y-auto px-margin-mobile py-gutter space-y-gutter pb-[100px] hide-scrollbar">
+<section class="border border-dashed border-outline-variant p-gutter flex flex-col gap-gutter bg-surface-dim relative">
+<div class="absolute top-0 left-0 w-2 h-2 border-r border-b border-background bg-primary"></div>
+<h2 class="font-label-mono text-label-mono uppercase text-muted-text">Invite Link</h2>
+<div class="flex gap-2 w-full">
+<button class="border border-dashed border-primary bg-primary text-background px-3 py-2 font-label-mono text-label-mono uppercase flex-1 transition-colors">Admin</button>
+<button class="border border-dashed border-outline-variant px-3 py-2 font-label-mono text-label-mono uppercase flex-1 hover:bg-surface-variant transition-colors">Member</button>
+<button class="border border-dashed border-outline-variant px-3 py-2 font-label-mono text-label-mono uppercase flex-1 hover:bg-surface-variant transition-colors">Viewer</button>
+</div>
+<button class="w-full bg-primary text-background font-display-matrix text-body-md uppercase py-3 hover:bg-surface-variant hover:text-primary transition-colors border border-primary h-touch-target active:invert">
+                Generate Invite Link
+            </button>
+<div class="pt-gutter border-t border-dashed border-outline-variant flex flex-col gap-unit mt-unit">
+<div class="flex items-center justify-between border border-dashed border-outline-variant p-2 bg-surface-container-high">
+<span class="font-label-mono text-label-mono truncate pr-4 text-primary">nflw.io/inv/x7k9p...</span>
+<button class="w-[32px] h-[32px] flex items-center justify-center bg-primary text-background hover:opacity-80 transition-opacity shrink-0 active:invert">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+<div class="w-full text-right">
+<span class="font-label-mono text-label-mono text-muted-text">[EXPIRES IN 7 DAYS]</span>
+</div>
+</div>
+</section>
+<section class="border border-dashed border-outline-variant flex flex-col bg-surface-dim">
+<div class="border-b border-dashed border-outline-variant flex flex-col">
+<div class="flex items-center gap-gutter p-gutter cursor-pointer bg-surface-container-high group transition-colors">
+<div class="w-[44px] h-[44px] rounded-full border border-dashed border-primary p-[2px] shrink-0">
+<img class="w-full h-full rounded-full object-cover grayscale" data-alt="Stark monochrome portrait of a person, sharp lighting, cinematic tech-noir aesthetic, pitch black background, glowing white highlights, experimental photography style, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlCTrPsX-2TDKh3lTDpxjfh2hR-7nQqs78I4P-02VuvJRHdHASZoUAQ-BRkjrxNbFmfREOrbjLHvL9BJPT71Nq1PLB64NpW_x-0beERMvBHwQXo7opBkN6WVT2uBUmYOoTu0VNzmG8De7G0I13nTq-nrqTpDLTWvnhZHsisk3VFfeM8ICsmggTUmHJwjlcowrsvF1sXJUxonmZ2xbnCzuTASJMm4o_syZjKX5HhCj4WIFWyNw4EPP0"/>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<div class="font-display-matrix text-body-md uppercase truncate text-primary leading-tight">A. Sterling (You)</div>
+<div class="font-label-mono text-label-mono text-muted-text truncate mt-1">admin@noirly.flow</div>
+</div>
+<div class="font-label-mono text-label-mono shrink-0 text-primary">[OWNER]</div>
+</div>
+<div class="p-gutter pt-0 bg-surface-container-high flex flex-col gap-gutter">
+<div class="w-full border-t border-dashed border-outline-variant my-unit"></div>
+<div class="font-label-mono text-label-mono text-muted-text uppercase">Manage Role</div>
+<div class="flex gap-2">
+<button class="border border-dashed border-primary bg-primary text-background px-3 py-2 font-label-mono text-label-mono uppercase flex-1 transition-colors">Owner</button>
+<button class="border border-dashed border-outline-variant px-3 py-2 font-label-mono text-label-mono uppercase flex-1 opacity-50 cursor-not-allowed">Admin</button>
+</div>
+<div class="flex flex-col gap-unit mt-unit">
+<button class="w-full border border-dashed border-outline-variant py-2 font-display-matrix text-body-md uppercase text-muted-text opacity-50 cursor-not-allowed h-touch-target" disabled="">Remove From Workspace</button>
+<span class="font-label-mono text-label-mono text-muted-text text-center">[CANNOT REMOVE SELF]</span>
+</div>
+</div>
+</div>
+<div class="border-b border-dashed border-outline-variant flex items-center gap-gutter p-gutter cursor-pointer hover:bg-surface-variant transition-colors group">
+<div class="w-[44px] h-[44px] rounded-full border border-dashed border-outline-variant p-[2px] shrink-0 group-hover:border-primary transition-colors">
+<img class="w-full h-full rounded-full object-cover grayscale" data-alt="Minimalist silhouette portrait of a woman in profile, monochrome, stark lighting against a deep black void, highly detailed editorial fashion photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWNgo2OvlN7aGqekIlPv_BuheTfWtIlai-YQk9GMzACCrsvSYVm4Vv0N8cZOHsl4v-MLwINNo5YqAy__vYheVKEoMgX5_PyzYJaIUgcsnMqAGIiLZi4Yz-_lp17ow9vNG87WG8M5RSQ4dApBWW05ORSo2gSlPYvxzpRK4JDR7PMQseDOSbsXspjnMuZeb-BtAR43QNdm8LVMhCmQ1x9G5xV0QP2JAo1A6AVjDlhEwvYFK7mB-BBda9"/>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<div class="font-display-matrix text-body-md uppercase truncate text-primary leading-tight">K. Vane</div>
+<div class="font-label-mono text-label-mono text-muted-text truncate mt-1">kvane@noirly.flow</div>
+</div>
+<div class="font-label-mono text-label-mono shrink-0 text-muted-text group-hover:text-primary transition-colors">[MEMBER]</div>
+</div>
+<div class="border-b border-dashed border-outline-variant flex items-center gap-gutter p-gutter cursor-pointer hover:bg-surface-variant transition-colors group">
+<div class="w-[44px] h-[44px] rounded-full border border-dashed border-outline-variant p-[2px] shrink-0 group-hover:border-primary transition-colors">
+<img class="w-full h-full rounded-full object-cover grayscale" data-alt="Abstract monochrome macro photography of metallic surfaces reflecting stark white light against a pitch black background, gritty texture, industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjP1OqlJc7_BtjRriagt4UGUSDFdOo40uANBRkAv76SWhz2r9YAv9X1B9TxxJQ3O_FWwQTy_vCkeNeKK1vu9-Ppv_NUP0u5GdbwFAc36uGMYyQma_SJI4VISXcCBfFbizmbMJa_oKWFNIDv_JplMq3k7-3SkUD0gS8l2sLfCwRj7m55KKVAfn67tX7IhmYjEmOganotVjyK3Z21ZRqmRI7yOkOoNYJTYZ042UNNkhwlRyxm9shb4Jy"/>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<div class="font-display-matrix text-body-md uppercase truncate text-primary leading-tight">Sys_Log_Bot</div>
+<div class="font-label-mono text-label-mono text-muted-text truncate mt-1">bot_01@noirly.flow</div>
+</div>
+<div class="font-label-mono text-label-mono shrink-0 text-muted-text group-hover:text-primary transition-colors">[VIEWER]</div>
+</div>
+<div class="flex items-center gap-gutter p-gutter cursor-pointer hover:bg-surface-variant transition-colors group">
+<div class="w-[44px] h-[44px] rounded-full border border-dashed border-outline-variant p-[2px] shrink-0 group-hover:border-primary transition-colors">
+<img class="w-full h-full rounded-full object-cover grayscale" data-alt="High contrast black and white image of a digital wireframe mesh, glowing intersections, deep black background, technical geometric composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1nynJlFPYIvM2FErsE7lI5D-tK1G0035MsodBcMHvTtHUvBI4uSUTsllfeKGfjbcXVDQSsYhPyVdmZm0jp8VVF0pdqZBMKWlJvbF2wnf6JeXSgRfrcSd0WMIrmfytyNoBlbK--f8KjpAJq75mxvulck38BKa02elGNL-Vf5Tko2VIpnJwlQ55-zpON_n5G6t48TNH0buneSgioCyOk0GNttF-Mfrw_-aPRJSvVkgrhIVESxccsW1b"/>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<div class="font-display-matrix text-body-md uppercase truncate text-primary leading-tight">J. Doe</div>
+<div class="font-label-mono text-label-mono text-muted-text truncate mt-1">jdoe@noirly.flow</div>
+</div>
+<div class="font-label-mono text-label-mono shrink-0 text-muted-text group-hover:text-primary transition-colors">[MEMBER]</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-stretch h-[80px] pb-4 bg-background z-50 transition-all duration-75">
+<a class="flex flex-col items-center justify-center text-primary p-unit w-full h-full hover:bg-surface-container-high text-muted-text dark:text-muted-text border-t border-dashed border-outline-variant" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-mono text-label-mono uppercase mt-1">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary p-unit w-full h-full hover:bg-surface-container-high text-muted-text dark:text-muted-text border-t border-dashed border-outline-variant" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-mono text-label-mono uppercase mt-1">Board</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary p-unit w-full h-full hover:bg-surface-container-high text-muted-text dark:text-muted-text border-t border-dashed border-outline-variant" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-mono text-label-mono uppercase mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-background p-unit w-full h-full" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu</span>
+<span class="font-label-mono text-label-mono uppercase mt-1">Menu</span>
+</a>
+</nav>
+</body></html>
