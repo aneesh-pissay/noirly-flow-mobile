@@ -4,7 +4,7 @@ Native React Native client for [Noirly Flow](https://noirly.flow.aneesh-pissay.i
 
 ## Setup
 
-1. GitHub Packages auth (`.npmrc` already scopes `@noirly-dev`):
+1. GitHub Packages auth. The Noirly packages are published as `@aneesh-pissay/*` and aliased to the `@noirly-dev/*` names the code imports (`package.json`); `.npmrc` scopes `@aneesh-pissay`:
 
 ```bash
 export NODE_AUTH_TOKEN=ghp_xxx   # read:packages

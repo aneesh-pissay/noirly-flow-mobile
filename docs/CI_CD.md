@@ -69,7 +69,7 @@ git push -u origin main
 | `ANDROID_KEYSTORE_PASSWORD` | `storePassword` from `android/keystore.properties` |
 | `ANDROID_KEY_ALIAS` | `keyAlias` (`noirly-flow`) |
 | `ANDROID_KEY_PASSWORD` | `keyPassword` (same as the store password for this PKCS12 key) |
-| `NOIRLY_PACKAGES_TOKEN` | a GitHub token with `read:packages` that can read the `@noirly-dev` packages |
+| `NOIRLY_PACKAGES_TOKEN` | a GitHub token with `read:packages` that can read the `@aneesh-pissay` packages (aliased as `@noirly-dev/*`) |
 
 | Variable (optional) | Value |
 |---|---|

@@ -27,7 +27,7 @@ jobs:
       - name: Install
         run: npm ci
         env:
-          # @noirly-dev/* packages come from GitHub Packages (.npmrc).
+          # @noirly-dev/* are aliases of @aneesh-pissay/* packages in GitHub Packages (.npmrc).
           NODE_AUTH_TOKEN: ${{ secrets.NOIRLY_PACKAGES_TOKEN }}
       - run: npm run typecheck
       - run: npm run lint
