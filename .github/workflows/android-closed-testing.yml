@@ -48,6 +48,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Windows does not preserve executable bits in Git. Ensure the Gradle
+      # wrapper can be launched by Fastlane on the Linux runner.
+      - name: Make Gradle wrapper executable
+        run: chmod +x android/gradlew
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
