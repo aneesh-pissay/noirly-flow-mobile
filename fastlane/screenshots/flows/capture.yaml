@@ -29,22 +29,34 @@ name: Store screenshots
 - waitForAnimationToEnd
 - takeScreenshot: board
 
-# 3 — Calendar
+# 3 — Quick add, with a due date and priority picked
+- tapOn:
+    id: "task-add-fab"
+- tapOn:
+    id: "task-add-input"
+- inputText: "Review hero copy with Lena"
+- hideKeyboard
+- tapOn: "Tomorrow"
+- tapOn:
+    id: "task-add-priority-high"
+- waitForAnimationToEnd
+- takeScreenshot: quickadd
+# Closes the sheet without adding the task.
+- back
+
+# 4 — Calendar
 - tapOn: "Calendar"
 - waitForAnimationToEnd
 - takeScreenshot: calendar
 
-# 4, 5 — Task detail and its checklist
-- tapOn: "Board"
+# 5 — Task detail (from the list: the board pages one column at a time)
+- tapOn: "List"
+- scrollUntilVisible:
+    element: "Homepage hero copy"
+    direction: DOWN
 - tapOn: "Homepage hero copy"
 - waitForAnimationToEnd
 - takeScreenshot: task
-- scrollUntilVisible:
-    element: "Hand off to dev"
-    direction: DOWN
-    centerElement: true
-- waitForAnimationToEnd
-- takeScreenshot: checklist
 - back
 
 # 6 — Search

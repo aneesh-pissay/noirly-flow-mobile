@@ -5,7 +5,10 @@ const SERVICE = "noirly-flow-identity";
 
 export const keychainStorage: TokenStorage = {
   async getItem(key: string) {
-    const result = await Keychain.getGenericPassword({ service: `${SERVICE}:${key}` });
+    const result = await Keychain.getGenericPassword({
+      service: `${SERVICE}:${key}`,
+      rules: Keychain.SECURITY_RULES.AUTOMATIC_UPGRADE,
+    });
     return result ? result.password : null;
   },
   async setItem(key: string, value: string) {

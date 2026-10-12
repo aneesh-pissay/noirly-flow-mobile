@@ -5,18 +5,25 @@ the app and can be refreshed in minutes.
 
 | Asset | File | Made by |
 |---|---|---|
-| Launcher icon (legacy + adaptive) | `android/app/src/main/res/mipmap-*` | `tools/store-art/icons.mjs` |
+| Launcher icon (adaptive vectors, light / dark / themed; PNG fallback) | `android/app/src/main/res/{drawable,mipmap-*,values*}/ic_launcher*` | `tools/store-art/icons.mjs` |
 | Play icon, 512×512 | `fastlane/metadata/android/en-US/images/icon.png` | `tools/store-art/icons.mjs` |
 | Phone screenshots, 1080×1920 | `fastlane/metadata/android/en-US/images/phoneScreenshots/*.jpg` | `tools/store-art/store.mjs` |
 | Feature graphic, 1024×500 | `fastlane/metadata/android/en-US/images/featureGraphic.jpg` | `tools/store-art/store.mjs` |
 
 The icon is the Noirly Flow web mark, a board whose cards thin out column by
 column. It's copied from `noirly-flow/public/brand-mark.svg` into
-`design/brand/flow-mark.svg`, drawn in the web favicon's gold `#C9A44A` on the
-Noirly dark background `#0a0a08`. The app's sign-in screen shows the same mark
-(`src/ui/BrandMark.tsx`, tinted with the theme accent like the web login). If
-the web mark changes, copy the new SVG over and run `node icons.mjs` and
-`node store.mjs`. Keep `BrandMark.tsx`'s card positions in step with the SVG. The screenshots use the layout
+`design/brand/flow-mark.svg`. On Android 8+ it is an adaptive icon drawn as
+vectors in the web theme's two schemes, and the launcher follows the system:
+`#8a6b00` gold on `#faf8f2` in light mode, `#ffe66d` gold on `#0a0a08` in dark
+mode (`values/` and `values-night/ic_launcher_colors.xml`). A monochrome layer
+lets Android 13+ *Themed icons* tint it like the system apps. The mark is 44dp
+wide on the 108dp canvas, centred on the cards, so no launcher mask crops it.
+Android 7 and the Play listing icon use the dark scheme as PNGs. The app's
+sign-in screen shows the same mark (`src/ui/BrandMark.tsx`, tinted with the
+theme accent like the web login). If the web mark changes, copy the new SVG
+over, update the card list in `icons.mjs`, and run `node icons.mjs` and
+`node store.mjs`. Keep `BrandMark.tsx`'s card positions in step with the SVG.
+The screenshots use the layout
 large listings use: a bold headline over the real screen in a phone frame,
 alternating gold and dark slides.
 
@@ -48,7 +55,9 @@ Rendering uses `playwright-core` with your installed Google Chrome (or
    (`MAESTRO=/path/to/maestro` if it isn't on PATH), and writes
    `fastlane/screenshots/raw/*.png`.
 2. **Headlines**: edit `fastlane/screenshots/slides.json` (order, headline with
-   `**highlight**`, subline, `gold` or `dark`, optional badge).
+   `**highlight**`, subline, `gold` or `dark`, optional badge, and
+   `"focus": "bottom"` for a capture whose subject is a bottom sheet, which
+   the phone frame would otherwise crop).
 3. **Render**:
 
    ```bash
@@ -76,7 +85,11 @@ activity. Nothing was written to production. To do it again:
 3. `adb reverse tcp:3000 tcp:3000` (and `3002`, `4001`) so the emulator reaches
    them. Flow's `NEXT_PUBLIC_REALTIME_WS_URL` and realtime's
    `REALTIME_ORIGIN_ALLOWLIST` must accept `localhost`: the app sends its
-   WebSocket origin as `http://localhost:4001`.
+   WebSocket origin as `http://localhost:4001`. Without that the board shows
+   *Connecting* instead of *Live*. Both can be set as environment variables
+   when starting the servers (`NEXT_PUBLIC_REALTIME_WS_URL=ws://localhost:4001/ws`,
+   `REALTIME_ORIGIN_ALLOWLIST=http://localhost:3002,http://localhost:4001`)
+   rather than edited in the `.env` files.
 4. Seed demo data through Flow's own data layer, then run `capture.mjs`.
 
 Any real account with similar content works just as well; only the names in

@@ -26,7 +26,7 @@ if (!EMAIL || !PASSWORD) {
   console.error("Set EMAIL and PASSWORD (or --login file.json) for the account to screenshot.");
   process.exit(1);
 }
-const flow = resolve(args.find((a, i) => a.endsWith(".yaml") && i !== loginAt + 1) ?? join(ROOT, "fastlane/screenshots/flows/capture.yaml"));
+const flow = resolve(args.find((a, i) => a.endsWith(".yaml") && (loginAt < 0 || i !== loginAt + 1)) ?? join(ROOT, "fastlane/screenshots/flows/capture.yaml"));
 const appId = process.env.APP_ID ?? "com.noirly.flow";
 const workspace = process.env.WORKSPACE ?? "Northwind Studio";
 const device = process.env.DEVICE ?? "";

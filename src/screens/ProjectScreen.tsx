@@ -46,6 +46,8 @@ export function ProjectScreen({
       projectId={params.projectId}
       projectName={params.projectName}
       initialView={params.view}
+      // Embedded as the Board tab root, there is no stack header above it.
+      topInset={Boolean(routeParams)}
       onOpenTask={(taskId) => navigation.navigate("Task", { workspaceId, taskId })}
     />
   );

@@ -1,163 +1,216 @@
-import React, { useCallback, useState } from "react";
-import { Alert, Pressable, StyleSheet, View } from "react-native";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useEffect, useState } from "react";
 import {
-  Button,
-  Eyebrow,
-  FormField,
-  Input,
-  Text,
-  useTheme,
-} from "@noirly-dev/ui-native";
+  Alert,
+  KeyboardAvoidingView,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation, useRoute, type RouteProp } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { MaterialDesignIcons } from "@react-native-vector-icons/material-design-icons";
+import { Button, Eyebrow, Input, Text, useTheme } from "@noirly-dev/ui-native";
+import { errorMessage, isUnverified } from "../auth/accountApi";
 import { NoirlyIdentity } from "../auth/identity";
 import { useAuth } from "../auth/AuthContext";
-import { config } from "../config";
+import { useGoogleSignIn } from "../auth/useGoogleSignIn";
+import type { RootStackParamList } from "../navigation/types";
 import { colors, spacing } from "../theme";
 import { BrandMark } from "../ui/BrandMark";
-import type { NoirlySession } from "@noirly-dev/identity-mobile";
+import { Field, OrDivider, PasswordInput, TextLink } from "../ui/auth/AuthScaffold";
 
-let googleConfigured = false;
-
-function ensureGoogle() {
-  if (googleConfigured || !config.googleWebClientId) return false;
-  GoogleSignin.configure({
-    webClientId: config.googleWebClientId,
-    offlineAccess: false,
-  });
-  googleConfigured = true;
-  return true;
-}
+type Nav = NativeStackNavigationProp<RootStackParamList>;
 
 export function LoginScreen() {
+  const navigation = useNavigation<Nav>();
+  const route = useRoute<RouteProp<RootStackParamList, "Login">>();
   const { setSession } = useAuth();
   const tokens = useTheme();
+  const google = useGoogleSignIn();
+  const prefill = route.params?.email;
   const [busy, setBusy] = useState(false);
-  const [showEmail, setShowEmail] = useState(false);
-  const [email, setEmail] = useState("");
+  // Coming back from sign-up, verification or a reset lands on the email form.
+  const [showEmail, setShowEmail] = useState(Boolean(prefill) || !google.available);
+  const [email, setEmail] = useState(prefill ?? "");
   const [password, setPassword] = useState("");
-  const googleReady = Boolean(config.googleWebClientId);
 
-  const run = useCallback(
-    async (action: () => Promise<NoirlySession>) => {
-      setBusy(true);
-      try {
-        const session = await action();
-        setSession(session);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Sign in failed";
-        Alert.alert("Sign in failed", message);
-      } finally {
-        setBusy(false);
-      }
-    },
-    [setSession],
-  );
+  useEffect(() => {
+    if (prefill) {
+      setEmail(prefill);
+      setShowEmail(true);
+    }
+  }, [prefill]);
 
-  const signInWithGoogle = useCallback(() => {
-    if (!ensureGoogle()) {
-      Alert.alert(
-        "Google sign-in unavailable",
-        "Set googleWebClientId in config to Identity’s GOOGLE_CLIENT_ID.",
-      );
+  async function submitEmail() {
+    if (!email.trim() || !password) {
+      Alert.alert("Sign in failed", "Enter your email and password.");
       return;
     }
-    void run(async () => {
-      await GoogleSignin.hasPlayServices();
-      const result = await GoogleSignin.signIn();
-      const idToken = result.data?.idToken;
-      if (!idToken) throw new Error("Google did not return an idToken");
-      return NoirlyIdentity.signInWithGoogle({ idToken });
-    });
-  }, [run]);
+    setBusy(true);
+    try {
+      setSession(await NoirlyIdentity.signInWithPassword({ email: email.trim(), password }));
+    } catch (err) {
+      if (isUnverified(err)) {
+        navigation.navigate("VerifyEmail", { email: email.trim() });
+        return;
+      }
+      Alert.alert("Sign in failed", errorMessage(err, "Sign in failed"));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const anyBusy = busy || google.busy;
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.hero}>
-        <View
-          style={[
-            styles.logoMark,
-            {
-              backgroundColor: tokens.color.accentSoft,
-              borderColor: tokens.color.hairline,
-              borderRadius: tokens.radius.lg,
-            },
-          ]}
+      {/* The app draws edge to edge, so Android's adjustResize no longer
+          shrinks the window for the keyboard. Pad for it here and let the
+          form scroll, or the fields end up underneath the keyboard. */}
+      <KeyboardAvoidingView behavior="padding" style={styles.flex}>
+        <ScrollView
+          // With the form open, keep it up under the logo rather than pushed
+          // to the bottom with a gap above it.
+          contentContainerStyle={[styles.scroll, showEmail && styles.scrollTop]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          <BrandMark size={68} color={tokens.color.accent} />
-        </View>
-        <Eyebrow>Noirly</Eyebrow>
-        <Text variant="pageTitle">Flow</Text>
-        <Text variant="copy" tone="secondary" style={styles.tagline}>
-          Tasks, boards and presence for the whole workspace.
-        </Text>
-      </View>
+          {/* Keyed by mode so switching to the email form mounts a fresh tree.
+              Patching the same views from one layout to the other (a button
+              gaining an icon, a divider inserted before it) tripped Fabric's
+              "Unable to find viewState … for updateLayout" and left the screen
+              half drawn. */}
+          <View key={showEmail ? "email" : "start"} style={[styles.content, showEmail && styles.scrollTop]}>
+          <View style={[styles.hero, showEmail && styles.heroCompact]}>
+            <View
+              style={[
+                styles.logoMark,
+                showEmail && styles.logoMarkCompact,
+                {
+                  backgroundColor: tokens.color.accentSoft,
+                  borderColor: tokens.color.hairline,
+                  borderRadius: tokens.radius.lg,
+                },
+              ]}
+            >
+              <BrandMark size={showEmail ? 40 : 68} color={tokens.color.accent} />
+            </View>
+            <Eyebrow>Noirly</Eyebrow>
+            <Text variant="pageTitle" style={styles.title}>
+              {showEmail ? "Sign in to Flow" : "Flow"}
+            </Text>
+            {showEmail ? null : (
+              <Text variant="copy" tone="secondary" style={styles.tagline}>
+                Tasks, boards and presence for the whole workspace.
+              </Text>
+            )}
+          </View>
 
-      <View style={styles.actions}>
-        {googleReady ? (
-          <Button
-            label="Sign in with Google"
-            onPress={signInWithGoogle}
-            disabled={busy}
-            loading={busy && !showEmail}
-            size="lg"
-            fullWidth
-          />
-        ) : null}
+          <View style={styles.actions}>
+            {showEmail ? (
+              <View style={styles.emailForm}>
+                <Field label="Email">
+                  <Input
+                    testID="login-email"
+                    placeholder="you@example.com"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    autoComplete="email"
+                    textContentType="emailAddress"
+                    autoFocus={!prefill}
+                    returnKeyType="next"
+                    value={email}
+                    onChangeText={setEmail}
+                    leading={
+                      <MaterialDesignIcons name="email-outline" size={18} color={tokens.color.textMuted} />
+                    }
+                  />
+                </Field>
+                <Field label="Password">
+                  <PasswordInput
+                    testID="login-password"
+                    placeholder="Your password"
+                    autoComplete="password"
+                    textContentType="password"
+                    autoFocus={Boolean(prefill)}
+                    returnKeyType="go"
+                    onSubmitEditing={() => void submitEmail()}
+                    value={password}
+                    onChangeText={setPassword}
+                  />
+                </Field>
+                <Pressable
+                  testID="login-forgot"
+                  onPress={() =>
+                    navigation.navigate("ForgotPassword", { email: email.trim() || undefined })
+                  }
+                  accessibilityRole="button"
+                  style={styles.forgot}
+                  hitSlop={6}
+                >
+                  <Text variant="meta" tone="accent">
+                    Forgot password?
+                  </Text>
+                </Pressable>
+                <Button
+                  testID="login-submit"
+                  label="Sign in"
+                  onPress={() => void submitEmail()}
+                  disabled={anyBusy}
+                  loading={busy}
+                  size="lg"
+                  fullWidth
+                />
+              </View>
+            ) : null}
 
-        {showEmail ? (
-          <View style={styles.emailForm}>
-            <FormField label="Email">
-              <Input
-                testID="login-email"
-                placeholder="you@example.com"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                autoComplete="email"
-                value={email}
-                onChangeText={setEmail}
+            {google.available ? (
+              <>
+                {showEmail ? <OrDivider /> : null}
+                <Button
+                  testID="login-google"
+                  label={showEmail ? "Continue with Google" : "Sign in with Google"}
+                  variant={showEmail ? "ghost" : "solid"}
+                  icon={
+                    showEmail ? (
+                      <MaterialDesignIcons name="google" size={18} color={tokens.color.text} />
+                    ) : undefined
+                  }
+                  onPress={() => void google.signIn()}
+                  disabled={anyBusy}
+                  loading={google.busy}
+                  size="lg"
+                  fullWidth
+                />
+              </>
+            ) : null}
+
+            {showEmail ? null : (
+              <Button
+                testID="login-use-email"
+                label="Sign in with email"
+                variant="ghost"
+                icon={<MaterialDesignIcons name="email-outline" size={18} color={tokens.color.text} />}
+                onPress={() => setShowEmail(true)}
+                disabled={anyBusy}
+                size="lg"
+                fullWidth
               />
-            </FormField>
-            <FormField label="Password">
-              <Input
-                testID="login-password"
-                placeholder="••••••••"
-                secureTextEntry
-                autoComplete="password"
-                value={password}
-                onChangeText={setPassword}
-              />
-            </FormField>
-            <Button
-              testID="login-submit"
-              label="Continue with email"
-              onPress={() => {
-                void run(() =>
-                  NoirlyIdentity.signInWithPassword({ email, password }),
-                );
-              }}
-              disabled={busy}
-              loading={busy}
-              variant={googleReady ? "ghost" : "solid"}
-              size="lg"
-              fullWidth
-              style={styles.emailSubmit}
+            )}
+
+            <TextLink
+              testID="login-register"
+              label="New to Noirly?"
+              emphasis="Create an account"
+              onPress={() => navigation.navigate("Register")}
+              disabled={anyBusy}
             />
           </View>
-        ) : (
-          <Pressable
-            disabled={busy}
-            onPress={() => setShowEmail(true)}
-            style={styles.secondaryLink}
-            testID="login-use-email"
-            accessibilityRole="button"
-          >
-            <Text variant="meta" tone="muted">
-              {googleReady ? "Use email instead" : "Sign in with email"}
-            </Text>
-          </Pressable>
-        )}
-      </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -166,6 +219,13 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.bg,
+  },
+  flex: { flex: 1 },
+  scrollTop: { justifyContent: "flex-start" },
+  content: { flexGrow: 1, justifyContent: "space-between" },
+  title: { textAlign: "center", alignSelf: "stretch" },
+  scroll: {
+    flexGrow: 1,
     paddingHorizontal: 20,
     justifyContent: "space-between",
   },
@@ -175,6 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: spacing.sm,
   },
+  heroCompact: { flex: 0, paddingTop: spacing.xl, paddingBottom: spacing.xl },
   logoMark: {
     width: 72,
     height: 72,
@@ -183,23 +244,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: spacing.lg,
   },
+  logoMarkCompact: { width: 48, height: 48, marginBottom: spacing.sm },
   tagline: {
     textAlign: "center",
     maxWidth: 280,
     marginTop: spacing.xs,
   },
   actions: {
-    paddingBottom: spacing.xl,
+    paddingBottom: spacing.lg,
     gap: spacing.md,
   },
   emailForm: {
     gap: spacing.md,
   },
-  emailSubmit: {
-    marginTop: spacing.xs,
-  },
-  secondaryLink: {
-    alignItems: "center",
-    paddingVertical: spacing.md,
+  forgot: {
+    alignSelf: "flex-end",
+    minHeight: 32,
+    justifyContent: "center",
+    marginTop: -spacing.xs,
   },
 });

@@ -105,6 +105,7 @@ export function InboxScreen() {
       workspaceId={workspaceId}
       projectId={null}
       projectName="Inbox"
+      topInset
       onOpenTask={(taskId) => navigation.navigate("Task", { workspaceId, taskId })}
     />
   );

@@ -32,6 +32,7 @@ export type MenuStackParamList = {
   MenuHome: undefined;
   Settings: undefined;
   DeleteAccount: undefined;
+  PrivacyPolicy: undefined;
   Activity: { workspaceId: string };
   Members: { workspaceId: string };
   Workspace: { workspaceId: string; workspaceName: string };
@@ -52,7 +53,13 @@ export type MainTabParamList = {
 };
 
 export type RootStackParamList = {
-  Login: undefined;
+  Onboarding: undefined;
+  /** `email` prefills the field — after sign-up, verification or a reset. */
+  Login: { email?: string; notice?: string } | undefined;
+  Register: undefined;
+  ForgotPassword: { email?: string } | undefined;
+  ResetPassword: { token?: string } | undefined;
+  VerifyEmail: { email: string };
   Main: NavigatorScreenParams<MainTabParamList>;
   Invite: { token: string };
   /** Kept for deep-link / invite redirect into a workspace hub */

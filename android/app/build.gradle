@@ -90,7 +90,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         // CI passes -PversionCode=<n> -PversionName=<x.y.z> (fastlane/Fastfile); local builds use these defaults.
         versionCode Integer.parseInt((project.findProperty("versionCode") ?: "1").toString())
-        versionName((project.findProperty("versionName") ?: "1.0.0").toString())
+        versionName((project.findProperty("versionName") ?: "1.1.0").toString())
     }
     signingConfigs {
         debug {

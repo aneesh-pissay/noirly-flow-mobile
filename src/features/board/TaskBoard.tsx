@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Dimensions,
+  Pressable,
+  ScrollView as RNScrollView,
   StyleSheet,
   View,
   type AccessibilityActionEvent,
@@ -45,8 +48,22 @@ type Props = {
   onReorder: (moves: BoardMove[]) => Promise<void>;
 };
 
-const COLUMN_WIDTH = 272;
 const COLUMN_GAP = spacing.md;
+/**
+ * One column fills most of the phone with the next one peeking in from the
+ * right, and the board pages column by column — a desktop strip of 272px
+ * columns read as a shrunken web page. Capped so tablets still show several.
+ */
+const COLUMN_WIDTH = Math.min(
+  360,
+  Math.round(Dimensions.get("window").width - spacing.lg * 2 - 36),
+);
+const PAGE = COLUMN_WIDTH + COLUMN_GAP;
+/** Trailing room so the last column can page fully into place, like the rest. */
+const TRAIL = Math.max(
+  spacing.lg,
+  Dimensions.get("window").width - COLUMN_WIDTH - spacing.lg,
+);
 const EDGE = 48;
 const AUTOSCROLL_STEP = 14;
 /** How long the finger rests in the edge zone before the board starts scrolling. */
@@ -286,12 +303,69 @@ export function TaskBoard({
     [move, onQuickEdit, stopAutoScroll, tasks],
   );
 
+  const [page, setPage] = useState(0);
+  const pillsRef = useRef<React.ComponentRef<typeof RNScrollView>>(null);
+
   function onScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
     scroll.current.x = event.nativeEvent.contentOffset.x;
+    const next = Math.round(scroll.current.x / PAGE);
+    if (next !== page) setPage(next);
+  }
+
+  function goToColumn(index: number) {
+    scrollRef.current?.scrollTo({ x: index * PAGE, animated: true });
+    setPage(index);
   }
 
   return (
     <View ref={rootRef} style={styles.root} onLayout={measureRoot} collapsable={false}>
+      <RNScrollView
+        ref={pillsRef}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.pills}
+        style={styles.pillBar}
+      >
+        {views.map((column, index) => {
+          const active = index === Math.min(page, views.length - 1);
+          const count = groups[column.id]?.length ?? 0;
+          return (
+            <Pressable
+              key={column.id}
+              testID={`board-pill-${column.name}`}
+              onPress={() => goToColumn(index)}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: active }}
+              accessibilityLabel={`${column.name}, ${count} tasks`}
+              style={[
+                styles.pill,
+                {
+                  borderRadius: tokens.radius.sm,
+                  borderColor: active ? tokens.color.accent : tokens.color.hairline,
+                  backgroundColor: active ? tokens.color.accentSoft : tokens.color.surface,
+                },
+              ]}
+            >
+              <Text variant="meta" tone={active ? "accent" : "secondary"} weight={active ? "600" : "400"}>
+                {column.name}
+              </Text>
+              <View
+                style={[
+                  styles.pillCount,
+                  {
+                    borderRadius: tokens.radius.xs,
+                    backgroundColor: active ? tokens.color.accent : tokens.color.surface2,
+                  },
+                ]}
+              >
+                <Text variant="meta" style={{ color: active ? tokens.color.accentInk : tokens.color.textMuted }}>
+                  {count}
+                </Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </RNScrollView>
       <ScrollView
         // gesture-handler types this ref as the component, not the instance it
         // actually receives under RN 0.87, so it is narrowed here.
@@ -304,6 +378,11 @@ export function TaskBoard({
         onScroll={onScroll}
         scrollEventThrottle={16}
         scrollEnabled={!dragging}
+        // Page column by column while browsing; a drag drives the offset itself.
+        snapToInterval={dragging ? undefined : PAGE}
+        snapToAlignment="start"
+        decelerationRate="fast"
+        disableIntervalMomentum
         onContentSizeChange={(width) => {
           scroll.current.contentWidth = width;
         }}
@@ -587,10 +666,28 @@ function DraggableCard({
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  row: { padding: spacing.lg, gap: COLUMN_GAP },
+  row: { paddingLeft: spacing.lg, paddingRight: TRAIL, paddingBottom: spacing.lg, gap: COLUMN_GAP },
+  pillBar: { flexGrow: 0 },
+  pills: {
+    gap: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.md,
+  },
+  pill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    minHeight: 40,
+    paddingLeft: spacing.md,
+    paddingRight: spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  pillCount: { minWidth: 22, paddingHorizontal: 5, paddingVertical: 1, alignItems: "center" },
   column: { width: COLUMN_WIDTH, flex: 1, paddingHorizontal: 4 },
   columnScroll: { flex: 1 },
-  columnContent: { paddingBottom: spacing.xl },
+  // Clears the floating add button.
+  columnContent: { paddingBottom: 96 },
   columnHeader: {
     flexDirection: "row",
     alignItems: "center",

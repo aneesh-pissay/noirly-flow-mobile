@@ -3,26 +3,28 @@
     "raw": "inbox.png",
     "theme": "gold",
     "headline": "Your day,\nat a glance",
-    "sub": "Today, overdue and up next, in one calm inbox."
+    "sub": "Overdue, today and up next, grouped in one calm inbox."
   },
   {
     "raw": "board.png",
     "theme": "dark",
     "badge": "Live",
-    "headline": "Boards that move\nwith your **team**",
-    "sub": "Drag cards across To do, In progress and Done. Everyone sees it instantly."
+    "headline": "Boards that fit\nin your **hand**",
+    "sub": "Swipe column to column. Everyone sees each move instantly."
+  },
+  {
+    "raw": "quickadd.png",
+    "theme": "dark",
+    "badge": "New",
+    "headline": "Capture it\nin **seconds**",
+    "sub": "Tap +, type, pick a due date and priority. Done.",
+    "focus": "bottom"
   },
   {
     "raw": "task.png",
-    "theme": "dark",
-    "headline": "Every detail,\nin **one place**",
-    "sub": "Status, priority, due dates, repeats and assignees."
-  },
-  {
-    "raw": "checklist.png",
     "theme": "gold",
-    "headline": "Big work,\nsmall steps",
-    "sub": "Checklists, subtasks and tags keep the next step obvious."
+    "headline": "Every detail,\nin one place",
+    "sub": "Status, priority, due dates, repeats, checklists and assignees."
   },
   {
     "raw": "calendar.png",

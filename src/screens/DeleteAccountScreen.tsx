@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Alert, Linking, StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button, Card, FormField, Input, Screen, Text } from "@noirly-dev/ui-native";
 import { useAuth } from "../auth/AuthContext";
 import { deleteNoirlyAccount, DeleteAccountError } from "../auth/deleteAccount";
 import { setMe } from "../auth/useMe";
 import { config } from "../config";
 import { spacing } from "../theme";
+import type { MenuStackParamList } from "../navigation/types";
 
 const DELETED = [
   "Your Noirly account: name, email, password and Google sign-in",
@@ -20,6 +23,7 @@ const DELETED = [
  * password, or the email for Google-only accounts.
  */
 export function DeleteAccountScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<MenuStackParamList, "DeleteAccount">>();
   const { session, setSession } = useAuth();
   const email = session?.user.email ?? "";
   const hasPassword = session?.user.hasPassword ?? true;
@@ -111,7 +115,7 @@ export function DeleteAccountScreen() {
           label="Privacy policy"
           variant="ghost"
           size="sm"
-          onPress={() => void Linking.openURL(`${config.flowApiUrl}/privacy`)}
+          onPress={() => navigation.navigate("PrivacyPolicy")}
         />
         <Button
           label="Delete on the web instead"

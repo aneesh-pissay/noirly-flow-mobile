@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { getPreference, setPreference } from "noirly-flow-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   navigationScreenOptions,
@@ -11,16 +12,40 @@ import { useAuth } from "../auth/AuthContext";
 import { useWorkspace } from "../workspace/WorkspaceContext";
 import type { RootStackParamList } from "./types";
 import { LoginScreen } from "../screens/LoginScreen";
+import { OnboardingScreen } from "../screens/OnboardingScreen";
+import { RegisterScreen } from "../screens/auth/RegisterScreen";
+import { ForgotPasswordScreen } from "../screens/auth/ForgotPasswordScreen";
+import { ResetPasswordScreen } from "../screens/auth/ResetPasswordScreen";
+import { VerifyEmailScreen } from "../screens/auth/VerifyEmailScreen";
 import { InviteScreen } from "../screens/InviteScreen";
 import { MainTabNavigator } from "./MainTabNavigator";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const ONBOARDED_KEY = "flow.onboarded";
+
+/** `null` while the stored flag is being read. */
+function useOnboarded() {
+  const [onboarded, setOnboarded] = useState<boolean | null>(null);
+  useEffect(() => {
+    getPreference(ONBOARDED_KEY)
+      .then((value) => setOnboarded(value === "1"))
+      .catch(() => setOnboarded(true));
+  }, []);
+  const finish = useCallback(() => {
+    setPreference(ONBOARDED_KEY, "1");
+    setOnboarded(true);
+  }, []);
+  return [onboarded, finish] as const;
+}
 
 const linking = {
   prefixes: ["noirlyflow://"],
   config: {
     screens: {
       Invite: "invite/:token",
+      // noirlyflow://reset-password?token=… — the query becomes the param.
+      ResetPassword: "reset-password",
       Main: {
         path: "",
         screens: {
@@ -38,10 +63,11 @@ export function RootNavigator() {
   const { session, loading } = useAuth();
   const { ready: workspaceReady } = useWorkspace();
   const tokens = useTheme();
+  const [onboarded, finishOnboarding] = useOnboarded();
 
   // Hold the spinner until the last-used workspace is restored, so the first
   // tab doesn't open on the personal workspace and then jump.
-  if (loading || (session && !workspaceReady)) {
+  if (loading || onboarded === null || (session && !workspaceReady)) {
     return (
       <View
         style={{
@@ -62,12 +88,18 @@ export function RootNavigator() {
     // background during a push, which flashes light on a dark app.
     <NavigationContainer linking={linking} theme={navigationTheme(tokens)}>
       <Stack.Navigator screenOptions={navigationScreenOptions(tokens)}>
-        {!session ? (
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
+        {!session && !onboarded ? (
+          <Stack.Screen name="Onboarding" options={{ headerShown: false }}>
+            {() => <OnboardingScreen onDone={finishOnboarding} />}
+          </Stack.Screen>
+        ) : !session ? (
+          <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+            <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+            <Stack.Screen name="VerifyEmail" component={VerifyEmailScreen} />
+          </Stack.Group>
         ) : (
           <>
             <Stack.Screen

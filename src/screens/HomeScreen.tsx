@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Alert, Linking, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { CompositeNavigationProp } from "@react-navigation/native";
 import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
@@ -18,7 +18,6 @@ import {
 } from "@noirly-dev/ui-native";
 import { api } from "../api/client";
 import { useAuth } from "../auth/AuthContext";
-import { config } from "../config";
 import { can } from "../permissions";
 import { colors, spacing } from "../theme";
 import type { FlowMe, Project, Workspace } from "../types";
@@ -361,7 +360,7 @@ export function HomeScreen() {
             <ListSeparator />
             <ListRow
               title="Privacy policy"
-              onPress={() => void Linking.openURL(`${config.flowApiUrl}/privacy`)}
+              onPress={() => navigation.navigate("PrivacyPolicy")}
             />
             <ListSeparator />
             <View testID="menu-delete-account">

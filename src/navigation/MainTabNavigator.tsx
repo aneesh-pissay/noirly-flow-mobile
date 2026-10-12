@@ -13,6 +13,7 @@ import { ProjectScreen } from "../screens/ProjectScreen";
 import { TaskScreen } from "../screens/TaskScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
 import { DeleteAccountScreen } from "../screens/DeleteAccountScreen";
+import { PrivacyPolicyScreen } from "../screens/PrivacyPolicyScreen";
 import { ActivityScreen } from "../screens/ActivityScreen";
 import { MembersScreen } from "../screens/MembersScreen";
 import { WorkspaceScreen } from "../screens/WorkspaceScreen";
@@ -124,6 +125,11 @@ function MenuStackNavigator() {
         name="DeleteAccount"
         component={DeleteAccountScreen}
         options={{ title: "Delete account" }}
+      />
+      <MenuStack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: "Privacy policy" }}
       />
       <MenuStack.Screen name="Activity" component={ActivityScreen} />
       <MenuStack.Screen name="Members" component={MembersScreen} />

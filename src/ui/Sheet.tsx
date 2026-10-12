@@ -2,7 +2,6 @@ import React from "react";
 import {
   KeyboardAvoidingView,
   Modal,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -38,7 +37,9 @@ export function Sheet({ visible, title, onClose, children }: SheetProps) {
     >
       <KeyboardAvoidingView
         style={styles.fill}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        // Padding on Android too: the app is edge to edge, so the window no
+        // longer resizes for the keyboard and a sheet's fields would sit under it.
+        behavior="padding"
       >
         <Pressable
           style={[styles.backdrop, { backgroundColor: tokens.color.bgDeep }]}

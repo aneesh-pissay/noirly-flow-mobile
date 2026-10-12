@@ -1,1 +1,9 @@
-First release of Noirly Flow: inbox, boards, calendar, team workspaces and live updates.
+A more natural phone experience:
+• New welcome tour on first launch
+• Create an account, reset a forgotten password and verify your email in the app
+• Quick add: tap + and set a due date and priority
+• Inbox grouped into Overdue, Today, Upcoming and Done
+• Boards page one column at a time, with column tabs
+• Search and filters tucked into the header
+• Forms stay above the keyboard
+• New icon for light, dark and themed home screens

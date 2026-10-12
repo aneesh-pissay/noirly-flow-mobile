@@ -20,7 +20,13 @@ const slides = JSON.parse(readFileSync(join(ROOT, "fastlane/screenshots/slides.j
 const W = 1080;
 const H = 1920;
 
-function phone(src, { width, top = null, left = null, rotate = 0, shadow = true }) {
+/**
+ * `focus: "bottom"` shows the lower part of the capture instead of the top —
+ * for a bottom sheet, which the slide would otherwise crop away. `visible` is
+ * how much of the screen (in slide px) fits between the phone's top and the
+ * bottom of the slide.
+ */
+function phone(src, { width, top = null, left = null, rotate = 0, shadow = true, focus = "top", visible = null }) {
   const bezel = Math.round(width * 0.03);
   const radius = Math.round(width * 0.11);
   const pos = `${top !== null ? `top:${top}px;` : ""}${left !== null ? `left:${left}px;` : "left:50%;margin-left:" + -width / 2 + "px;"}`;
@@ -28,8 +34,8 @@ function phone(src, { width, top = null, left = null, rotate = 0, shadow = true 
   <div style="position:absolute;${pos}width:${width}px;transform:rotate(${rotate}deg);transform-origin:50% 0;">
     <div style="position:relative;padding:${bezel}px;border-radius:${radius}px;background:linear-gradient(160deg,#2b2a25,#0d0d0b 45%,#1c1b17);
       box-shadow:${shadow ? "0 60px 120px rgba(0,0,0,.55), 0 20px 40px rgba(0,0,0,.35)," : ""} inset 0 0 0 2px rgba(255,255,255,.08), inset 0 0 0 ${Math.round(bezel * 0.45)}px #050505;">
-      <div style="position:relative;border-radius:${radius - bezel}px;overflow:hidden;background:#000;">
-        <img src="${src}" style="display:block;width:100%;" />
+      <div style="position:relative;border-radius:${radius - bezel}px;overflow:hidden;background:#000;${focus === "bottom" && visible ? `height:${visible}px;` : ""}">
+        <img src="${src}" style="display:block;width:100%;${focus === "bottom" && visible ? "position:absolute;left:0;bottom:0;" : ""}" />
         <div style="position:absolute;top:${Math.round(width * 0.022)}px;left:50%;width:${Math.round(width * 0.04)}px;height:${Math.round(width * 0.04)}px;margin-left:${-Math.round(width * 0.02)}px;
           border-radius:50%;background:#050505;box-shadow:0 0 0 2px rgba(255,255,255,.05);"></div>
       </div>
@@ -65,7 +71,13 @@ function slide(s, index) {
       ${headline(s.headline, ink, accent)}
       <p style="font-family:Hanken;font-weight:500;font-size:40px;line-height:1.35;color:${sub};max-width:860px;">${s.sub}</p>
     </div>
-    ${phone(dataUrl(join(RAW, s.raw)), { width: 780, top: s.badge ? 650 : 540 })}
+    ${phone(dataUrl(join(RAW, s.raw)), {
+      width: 780,
+      top: s.badge ? 650 : 540,
+      focus: s.focus,
+      // Down to the slide's bottom edge, less the bezel.
+      visible: 1920 - (s.badge ? 650 : 540) - Math.round(780 * 0.03),
+    })}
     <div style="position:absolute;bottom:38px;right:44px;font-family:Mono;font-size:22px;letter-spacing:.2em;color:${gold ? "rgba(10,10,8,.35)" : "rgba(255,230,109,.35)"};">${String(index + 1).padStart(2, "0")}</div>
   </div>`;
 }
